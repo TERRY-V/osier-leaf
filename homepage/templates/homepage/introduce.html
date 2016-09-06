@@ -1,0 +1,38 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>关于我们_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 column">
+            {% include "./homepage/include/nav-sidebar.html" %}
+        </div>
+
+        <div class="col-md-9 column">
+            <div class="panel panel-pynxl">
+                <div class="panel-body">
+                    <div class="page-header">
+                        <h3>关于我们</h3>
+                    </div>
+
+                    <div class="page-body">
+                        <h4>{{ site_info.site_name }}</h4>
+                        <div>
+                            {% if site_info.site_description %}
+                                <p>
+                                    {{ site_info.site_description }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

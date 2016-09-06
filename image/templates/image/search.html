@@ -1,0 +1,87 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>{{ column_now.column_name }}_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{%block main%}
+
+<section class="content-pynxl">
+    <div class="container">
+        <div class="panel panel-pynxl">
+            <div class="panel-body">
+                <ul class="list-inline category-ul-pynxl">
+                    <span>分类：</span>
+                    {% for t in type_list %}
+                        <li class="category-li-pynxl{% ifequal t.type type %} selected{% endifequal %}">
+                            <a href="/image/search/?q={{ query }}&type={{ t.type }}">{{ t.summary }}</a>
+                        </a>
+                    {% endfor %}
+                </ul>
+
+                <ul class="list-inline category-ul-pynxl">
+                    <span>类型：</span>
+                    {% for t in extratype_list %}
+                        <li class="category-li-pynxl{% ifequal t.type extratype %} selected{% endifequal %}">
+                            <a href="/image/search/?q={{ query }}&type={{ type }}&extratype={{ t.type }}">{{ t.summary }}</a>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel panel-pynxl">
+            <div class="grid-box">
+                <div class="grid">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var page = 0;
+    
+    var $grid = $('.grid').imagesLoaded( function() {
+        $grid.masonry({
+            itemSelector: '.grid-item',
+            columnWidth: 312
+        }); 
+    });
+
+    function getItemElement() {
+        page++;
+        var url = "/image/getitem/?q={{ query }}&type={{ type }}&extratype={{ extratype }}&page="+page;
+        $.get(url, function(data){
+            if(data.status == 0){
+                str = '';
+                for(var i in data.images){
+                    var imgsize = data.images[i]['imgsize'].split(",");
+                    var width = Number(imgsize[0]);
+                    var height = Number(imgsize[1]);
+                    str += '<div class="grid-item" style="height:' 
+                        + (302/width*height+20)
+                        + 'px">'
+                        + '<div class="showimg"><a href="/image/' + data.images[i]['imgid'] + '"> <img src="http://211.157.161.43/' + data.images[i]['imgpath'] + '" alt="' + data.images[i]['title'] + '" class="img-responsive"></a></div>'
+                        + '<div class="caption"><p class="text-center">' + data.images[i]['title'].substring(0, 10) + '</p></div>'
+                        + '</div>';
+                }
+
+                var obj = $(str);
+                $grid.append( obj ).masonry( 'appended', obj );
+            }
+        }, 'json')
+    };
+    
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            elems = getItemElement();
+        }
+    });
+
+    getItemElement();
+    getItemElement();
+</script>
+
+{% endblock %}
+

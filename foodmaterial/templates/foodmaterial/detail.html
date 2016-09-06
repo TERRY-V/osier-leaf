@@ -1,0 +1,280 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>{{ food_material.name }}_食材_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 column">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li>
+                                <span class="glyphicon glyphicon-home"></span>
+                                <a href="/">首页</a>
+                            </li>
+                            <li>
+                                <a href="{{ column_now.column_url }}">
+                                    {{ column_now.column_name }}
+                                </a>
+                            </li>
+                            <li>
+                                <a>{{ food_material.name }}</a>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="page-header">
+                        <h3>
+                            <strong>{{ food_material.name|safe }}</strong>
+                            {% if food_material.alias %}
+                                <small>({{ food_material.alias }})</small>
+                            {% endif %}
+                        </h3>
+                        <h4>
+                            <small>发布于: {{ food_material.get_time_string }} | 阅读: {{ food_material.viewnum }}</small>
+                        </h4>
+                        <br/>
+                        <div class="labels">
+                            {% for label in food_material.labels_as_list %}
+                                <a href="#"><span class="label label-pynxl-{{ forloop.counter|mod_lookup:6 }}">{{ label }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="summary-pynxl">
+                        <span class="summary-header">摘要</span>
+                        <span class="summary-content">{{ food_material.introduce|slice:"150" }}</span>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 id="introduce panel-title">
+                                <strong>{{ food_material.name }}</strong>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            {% if food_material.alias %}
+                                <p><span>别名：</span>{{ food_material.alias }}</p>
+                            {% endif %}
+                            {% if food_material.calory %}
+                                <p><span>热量：</span>{{ food_material.calory }}</p>
+                            {% endif %}
+                            {% if food_material.classify %}
+                                <p><span>分类：</span>{{ food_material.classify }}</p>
+                            {% endif %}
+                            {% if food_material.suitable_people %}
+                                <p><span>适宜人群：</span>{{ food_material.suitable_people }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if food_material.introduce %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="introduce panel-title">
+                                    <strong>{{ food_material.name }}的介绍</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.introduce|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if food_material.component %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="introduce panel-title">
+                                    <strong>{{ food_material.name }}的营养成分</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.component|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if food_material.effect %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="effect panel-title">
+                                    <strong>{{ food_material.name }}的功效与作用</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.effect|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if food_material.nutrition %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="nutrition panel-title">
+                                    <strong>{{ food_material.name }}的营养价值</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.nutrition|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if food_material.selection %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="selection panel-title">
+                                    <strong>如何挑选{{ food_material.name }}</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.selection|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if food_material.operation %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="operation panel-title">
+                                    <strong>{{ food_material.name }}的做法</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.operation|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if food_material.storage %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="storage panel-title">
+                                    <strong>{{ food_material.name }}的储存方法</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ food_material.storage|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <p class="declaration-pynxl">声明：本站内文章，未经网站允许或特别声明，严禁转载，但欢迎分享。</p>
+
+            <hr/>
+            
+            <div class="panel panel-default">
+                <div class="bd-reward-stl"><button id="bdRewardBtn"><span></span></button></div>
+                <script type="text/javascript" src="https://zz.bdstatic.com/zzdashang/js/bd-zz-reward.js"></script>
+            </div>
+
+            <div>
+                <div>
+                    <h6 class="heading text-center">
+                        <form id="form-support-against">
+                            {% csrf_token %}
+                            <button id="support-button" class="btn btn-default" type="submit">
+                                <span id="span-support-id" class="glyphicon glyphicon-thumbs-up">&nbsp;推荐({{ food_material.supportnum }})</span>
+                            </button>
+                            &nbsp;
+                            <button id="against-button" class="btn btn-default" type="submit"">
+                                <span id="span-against-id" class="glyphicon glyphicon-thumbs-down">&nbsp;反对({{ food_material.againstnum }})</span>
+                            </button>
+                        </form>
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 column">
+            <div class="panel panel-pynxl">
+                <div class="panel-heading panel-heading-pynxl">
+                    <h5>
+                        <span class="glyphicon glyphicon-flag"></span>
+                        <strong>热门食材</strong>
+                    </h5>
+                </div>
+                <ul class="list-group" id="hottest-you-like">
+                    {% if hottest_list %}
+                        {% for hottest in hottest_list %}
+                            <li class="list-group-item">
+                                <span class="badge pull-left">
+                                    {{ hottest.viewnum }}
+                                </span>
+                                &nbsp;
+                                <a href="/foodmaterial/{{ hottest.srcid }}">{{ hottest.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#support-button').click(function() {
+        $.ajax({
+            type:"POST",
+            url:"vote/",
+            data:{"type":1},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data) {
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var againstnum = data["againstnum"];
+                    var html = "<span id=\"span-support-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;推荐(";
+                    html += supportnum;
+                    html += ")</span>";
+                    $("#span-support-id").replaceWith(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+
+    $('#against-button').click(function(){
+        $.ajax({
+            type:"POST",
+            url:"vote/",
+            data:{"type":2},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var againstnum = data["againstnum"];
+                    var html = "<span id=\"span-against-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;反对(";
+                    html += againstnum;
+                    html += ")</span>";
+                    $("#span-against-id").replaceWith(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>
+
+{% endblock %}

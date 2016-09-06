@@ -1,0 +1,141 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>{{ column_now.column_name }}_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{%block main%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 column">
+            <div class="article-list panel panel-pynxl">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs nav-pynxl">
+                        <li role="presentation" style="float: left;">
+                            <h4>
+                                <span class="{{ column_now.column_icon }}"></span>
+                                &nbsp;
+                                {{ column_now.column_name }}
+                            </h4>
+                        </li>
+                        <li role="presentation"><a href="/book/search/?q=&sort=3">推荐</a></li>
+                        <li role="presentation"><a href="/book/search/?q=&sort=2">热门</a></li>
+                        <li role="presentation" class="active"><a href="/book/search/?q=&sort=1">最新</a></li>
+                    </ul>
+                </div>
+
+                {% if book_list %}
+                    <ul class="list-group">
+                        {% for book in book_list %}
+                            <li class="article list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-4 col-md-3">
+                                        <div class="artitle-img">
+                                            <img src="http://211.157.161.43/img001/{{ book.crawlerbookimg_set.first.imgpath }}" style="height: 200px; width: 132px" class="img-rounded img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8 col-md-9">
+                                        <div class="article-title clearfix">
+                                            <h4>
+                                                <a href="/book/{{ book.srcid }}">
+                                                    <strong>{{ book.bookname|slice:"50" }}</strong>
+                                                    <small>{{ book.subtitle }}</small>
+                                                </a>
+                                            </h4>
+                                        </div>
+
+                                        </br>
+
+                                        <div class="article-content">
+                                            <div>
+                                                <p>{{ book.content_intro|slice:"125" }}...</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="article-info text-right">
+                                            <span>
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                {{ book.get_time_string }}
+                                            </span>
+                                            <span>
+                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                                {{ book.viewnum }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>没有查询到任何信息。</p>
+                {% endif %}
+            </div>
+
+            <div class="text-center">
+                <ul class="pagination">
+                    <li>
+                        {% if book_list.has_previous %}
+                            <a href="/book/search/?q={{ query }}&page={{ book_list.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        {% endif %}
+                    </li>
+
+                    {% for page_num in page_range %}
+                        {% ifequal page_num book_list.number %}
+                            <li class="active">
+                                <span class="current">{{ book_list.number }}</span>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="/book/search/?q={{ query }}&page={{ page_num }}"">
+                                    <span>{{ page_num }}</span>
+                                </a>
+                            </li>
+                        {% endifequal %}
+                    {% endfor %}  
+
+                    <li>
+                        {% if book_list.has_next %}
+                            <a href="/book/search/?q={{ query }}&page={{ book_list.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        {% endif %}
+                    </li>
+                    <li><span>查询到{{ query_num }}条记录</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4 column">
+            <div class="panel panel-pynxl">
+                <div class="panel-heading">
+                    <h5>
+                        <span class="glyphicon glyphicon-flag"></span>
+                        <strong>热门图书</strong>
+                    </h5>
+                </div>
+                <ul class="list-group" id="hottest-you-like">
+                    {% if hottest_list %}
+                        {% for hottest in hottest_list %}
+                            <li class="list-group-item">
+                                <span class="badge pull-left">
+                                    {{ hottest.viewnum }}
+                                </span>
+                                &nbsp;
+                                <a href="/book/{{ hottest.srcid }}">{{ hottest.bookname }}</a>
+                                <span class="pull-right" style="color: red">
+                                    {{ hottest.score }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

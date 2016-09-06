@@ -1,0 +1,435 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>{{ book.bookname }}_{{ column_now.column_name }}_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 column">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li>
+                                <span class="glyphicon glyphicon-home"></span>
+                                <a href="/">首页</a>
+                            </li>
+                            <li>
+                                <a href="{{ column_now.column_url }}">
+                                    {{ column_now.column_name }}
+                                </a>
+                            </li>
+                            <li>
+                                <a>{{ book.bookname }}</a>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="page-header">
+                        <h3>
+                            <strong>{{ book.bookname|safe }}</strong>
+                        </h3>
+                        <h4>
+                            <small>发布于: {{ book.get_time_string }} | 阅读: {{ book.viewnum }}</small>
+                        </h4>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-3">
+                                    <div class="article-img">
+                                        <img src="http://211.157.161.43/img001/{{ book.crawlerbookimg_set.first.imgpath }}" class="img-rounded img-responsive">
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 col-md-9">
+                                    <div class="article-content">
+                                        {% if book.subtitle %}
+                                            <p><span>副标题: </span>{{ book.subtitle }}</p>
+                                        {% endif %}
+
+                                        {% if book.originname %}
+                                            <p><span>原作名: </span>{{ book.originname }}</p>
+                                        {% endif %}
+
+                                        {% if book.author %}
+                                            <p><span>作者: </span>{{ book.author }}</p>
+                                        {% endif %}
+
+                                        {% if book.translator %}
+                                            <p><span>译者: </span>{{ book.translator }}</p>
+                                        {% endif %}
+
+                                        {% if book.press %}
+                                            <p><span>出版社: </span>{{ book.press }}</p>
+                                        {% endif %}
+
+                                        {% if book.year %}
+                                            <p><span>出版年: </span>{{ book.get_year_string }}</p>
+                                        {% endif %}
+
+                                        {% if book.page %}
+                                            <p><span>页数: </span>{{ book.page }}</p>
+                                        {% endif %}
+
+                                        {% if book.price %}
+                                            <p><span>定价: </span>{{ book.price }}</p>
+                                        {% endif %}
+
+                                        {% if book.bidding %}
+                                            <p><span>装帧: </span>{{ book.bidding }}</p>
+                                        {% endif %}
+
+                                        {% if book.collection %}
+                                            <p><span>丛书: </span>{{ book.collection }}</p>
+                                        {% endif %}
+
+                                        {% if book.isbn %}
+                                            <p><span>ISBN: </span>{{ book.isbn }}</p>
+                                        {% endif %}
+
+                                        {% if book.score %}
+                                            <p><span>评分: </span>{{ book.score }}</p>
+                                        {% endif %}
+
+                                        {% if book.crawlerbookbuy_set.all %}
+                                            <hr/>
+                                            <p><span>在哪儿买这本书？</span></p>
+                                            {% for book_buy in book.crawlerbookbuy_set.all %}
+                                                <p>
+                                                    <a href="{{ book_buy.link }}" target="_blank">{{ book_buy.sitename }}</a>
+                                                    {{ book_buy.dyprice }}
+                                                </p>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if book.content_intro %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 id="content-intro panel-title">
+                                    <strong>内容简介</strong>
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                    <p>{{ book.content_intro }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if book.author_intro %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 id="author-intro panel-title">
+                                    <strong>作者简介</strong>
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ book.author_intro }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if book.dir %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 id="dir panel-title">
+                                    <strong>目录</strong>
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ book.dir }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <p class="declaration-pynxl">声明：本站内文章，未经网站允许或特别声明，严禁转载，但欢迎分享。</p>
+
+            <hr/>
+            
+            <div class="panel panel-default">
+                <div class="bd-reward-stl"><button id="bdRewardBtn"><span></span></button></div>
+                <script type="text/javascript" src="https://zz.bdstatic.com/zzdashang/js/bd-zz-reward.js"></script>
+            </div>
+
+            <div>
+                <div>
+                    <h6 class="heading text-center">
+                        <button id="support-button" class="btn btn-default" type="submit">
+                            <span id="span-support-id" class="glyphicon glyphicon-thumbs-up">
+                                推荐({{ book.supportnum }})
+                            </span>
+                        </button>
+                        &nbsp;
+                        <button id="against-button" class="btn btn-default" type="submit"">
+                            <span id="span-against-id" class="glyphicon glyphicon-thumbs-down">
+                                反对({{ book.againstnum }})
+                            </span>
+                        </button>
+                    </h6>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="comment-pynxl">
+                        <div class="comment-edit-pynxl clearfix">
+                            <form id="comment-form-pynxl">
+                                {% csrf_token %}
+                                <textarea id="comment" class="form-control" rows="4" placeholder="请输入评论 限200字!"></textarea>
+                                <button id="comment-button" type="submit" class="btn btn-comments-pynxl pull-right">
+                                    提交
+                                </button>
+                            </form>
+                        </div>
+
+                        <ul>
+                            <div id="hottest-comment">
+                                {% if hottest_comment_list %}
+                                    <div id="hottest-comment-heading">
+                                        <h5>
+                                            <strong>&nbsp;&nbsp;热门评论</strong>
+                                        </h5>
+                                    </div>
+                                    <div id="hottest-comment-list">
+                                        {% for hottest in hottest_comment_list %}
+                                            <li id="comment-each">
+                                                <div class="comment-avatar-pynxl">
+                                                    <img src="{{ hottest.user.img }}" width="40"></img>
+                                                </div>
+
+                                                <div class="comment-content-pynxl">
+                                                    <p class="comment-support pull-right">
+                                                        <a class="btn btn-link comment-support-button active" role="button" attrid="{{ hottest.id }}">
+                                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                                            ({{ hottest.supportnum }})
+                                                        </a>
+                                                    </p>
+
+                                                    <a>
+                                                        <h5>
+                                                            <strong>{{ hottest.user.username }}</strong>
+                                                        </h5>
+                                                    </a>
+
+                                                    <p>
+                                                        评论：
+                                                        {% autoescape on %}
+                                                        {{ hottest.comment }}
+                                                        {% endautoescape %}
+                                                    </p>
+
+                                                    <p>
+                                                        <h5>
+                                                            <small>{{ hottest.createtime|date:"Y-m-d H:i:s" }}</small>
+                                                        </h5>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div id="latest-comment">
+                                <div id="latest-comment-heading">
+                                    <h5>
+                                        <strong>&nbsp;&nbsp;最新评论</strong>
+                                    </h5>
+                                </div>
+
+                                <div id="latest-comment-list">
+                                    {% if latest_comment_list %}
+                                        {% for latest in latest_comment_list %}
+                                            <li id="comment-each">
+                                                <div class="comment-avatar-pynxl">
+                                                    <img src="{{ latest.user.img }}" width="40"></img>
+                                                </div>
+
+                                                <div class="comment-content-pynxl">
+                                                    <p class="comment-support pull-right">
+                                                        <a class="btn btn-link comment-support-button active" role="button" attrid="{{ latest.id }}">
+                                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                                            ({{ latest.supportnum }})
+                                                        </a>
+                                                    </p>
+
+                                                    <a>
+                                                        <h5>
+                                                            <strong>{{ latest.user.username }}</strong>
+                                                        </h5>
+                                                    </a>
+
+                                                    <p>
+                                                        评论：
+                                                        {% autoescape on %}
+                                                        {{ latest.comment }}
+                                                        {% endautoescape %}
+                                                    </p>
+
+                                                    <p>
+                                                        <h5>
+                                                            <small>{{ latest.createtime|date:"Y-m-d H:i:s" }}</small>
+                                                        </h5>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 column">
+            <div class="panel panel-pynxl">
+                <div class="panel-heading panel-heading-pynxl">
+                    <h5>
+                        <span class="glyphicon glyphicon-flag"></span>
+                        <strong>热门图书</strong>
+                    </h5>
+                </div>
+                <ul class="list-group" id="hottest-you-like">
+                    {% if hottest_list %}
+                        {% for hottest in hottest_list %}
+                            <li class="list-group-item">
+                                <span class="badge pull-left">
+                                    {{ hottest.viewnum }}
+                                </span>
+                                &nbsp;
+                                <a href="/book/{{ hottest.srcid }}">{{ hottest.bookname }}</a>
+                                <span class="pull-right" style="color: red">
+                                    {{ hottest.score }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#support-button').click(function() {
+        $.ajax({
+            type:"POST",
+            url:"vote/",
+            data:{"type":1},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data) {
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var againstnum = data["againstnum"];
+                    var html = "<span id=\"span-support-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;推荐(";
+                    html += supportnum;
+                    html += ")</span>";
+                    $("#span-support-id").replaceWith(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+
+    $('#against-button').click(function(){
+        $.ajax({
+            type:"POST",
+            url:"vote/",
+            data:{"type":2},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var againstnum = data["againstnum"];
+                    var html = "<span id=\"span-against-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;反对(";
+                    html += againstnum;
+                    html += ")</span>";
+                    $("#span-against-id").replaceWith(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>
+
+<script>
+    $('#comment-button').click(function() {
+        $.ajax({
+            type:"POST",
+            url:"comment/",
+            data:{"comment":$("#comment").val()},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                $("#comment").val("");
+                $("#latest-comment-list").prepend(data);
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+
+    $('.comment-support-button').click(function() {
+        var cid = $(this).attr("attrid");
+        var this_obj = $(this);
+        $.ajax({
+            type:"POST",
+            url:"support/",
+            data:{"cid":cid},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data) {
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var html = "<span class=\"glyphicon glyphicon-thumbs-up\"></span> (";
+                    html += supportnum;
+                    html += ")";
+                    this_obj.html(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>
+
+{% endblock %}

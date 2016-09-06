@@ -1,0 +1,31 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>负责声明_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 column">
+            {% include "./homepage/include/nav-sidebar.html" %}
+        </div>
+
+        <div class="col-md-9 column">
+            <div class="panel panel-pynxl">
+                <div class="panel-body">
+                    <div class="page-header">
+                        <h3>负责声明</h3>
+                    </div>
+
+                    <div class="page-body">
+                        {{ site_info.site_declaration|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+<section class="footer-section">
+    <div class="footer1-pynxl">
+        <div class="container">
+            <div class="col-xs-6 col-md-3">
+                <dt>关于柳梢儿</dt>
+                <dl class="list-unstyled">
+                    <dd>
+                        <a href="/about/introduce/" target="_blank">关于我们</a>
+                        <a href="/about/trends/" target="_blank">新闻动态</a>
+                    </dd>
+                    <dd>
+                        <a href="/about/mobile/" target="_blank">移动应用</a>
+                        <a href="/about/advertisement/" target="_blank">本站广告</a>
+                    </dd>
+                    <dd>
+                        <a href="/about/declaration/" target="_blank">负责声明</a>
+                        <a href="/about/help/" target="_blank">帮助中心</a>
+                    </dd>
+                    <dd>
+                        <a href="/about/contactus/" target="_blank">联系我们</a>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <dt>手机上柳梢儿</dt>
+                <dl class="list-unstyled">
+                    <dd>
+                        <a href="/">柳梢儿</a>
+                    </dd>
+                    <dd>
+                        <a href="/">Apple应用</a>
+                    </dd>
+                    <dd>
+                        <a href="/">Android应用</a>
+                    </dd>
+                    <dd>
+                        <a href="#"></a>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <dt>友情链接</dt>
+                <dl class="list-unstyled">
+                    <dd>
+                        <a href="/">柳梢儿</a>
+                        <a href="/cookbook/" target="_blank">美食频道</a>
+                    </dd>
+                    <dd>
+                        <a href="/movie/" target="_blank">电影频道</a>
+                    </dd>
+                    <dd>
+                        <a href="http://www.678wy.com/" target="_blank">文艺网</a>
+                        <a href="http://www.lzy5.com/" target="_blank">老中医网</a>
+                    </dd>
+                    <dd>
+                        <a href="#" target="_blank">更多</a>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <dt>关注我们</dt>
+                <dl class="list-unstyled">
+                    <dd>
+                        <a href="http://weibo.com/terryniu" target="_blank">站长微博</a>
+                    </dd>
+                    <dd>
+                        <a href="/" target="_blank">站长微信</a>
+                    </dd>
+                    <dd>
+                        <a href="/">导航</a>
+                    </dd>
+                    <dd>
+                        <a href="#"></a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="footer2-pynxl">
+        <div class="container">
+            <div class="links-pynxl">
+                <p>
+                    <span>
+                        旗下网站:&nbsp;
+                        {% for friendlink in site_info.friendlinks_set.all %}
+                            {% ifnotequal forloop.counter 1 %}{% endifnotequal %}
+                            <a href="{{ friendlink.linkurl }}" target="_blank">{{ friendlink.linkname }}</a>
+                        {% endfor %}
+                    </span>
+                </p>
+            </div>
+            <div class="copy-pynxl">
+                <p>
+                    <span>
+                        <a href="/about/introduce/" target="_blank">关于我们</a>
+                        <a href="/about/trends/" target="_blank">新闻动态</a>
+                        <a href="/about/contactus/" target="_blank">联系我们</a>
+                        <a href="/about/declaration/" target="_blank">负责声明</a>
+                        <a href="/about/help/" target="_blank">帮助中心</a>
+                        <a href="/about/mobile/" target="_blank">移动应用</a>
+                        <a href="/about/advertisement/" target="_blank">本站广告</a>
+                    </span>
+                </p>
+            </div>
+            <div class="copy-v2-pynxl">
+                <p>
+                    <span>
+                        Copyright &copy;{{ site_info.site_copyright }} {{ site_info.site_name }}
+                        <a href="http://www.miibeian.gov.cn/">
+                            {{ site_info.site_license }}
+                        </a>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

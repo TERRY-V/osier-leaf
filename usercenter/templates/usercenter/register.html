@@ -1,0 +1,118 @@
+{% extends "./homepage/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}<title>注册_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{%block main%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 form-box">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>注册</h3>
+                </div>
+            </div>
+            <div class="form-bottom">
+                <form role="form" method="post" class="register-form">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label class="sr-only" for="form-username">用户名</label>
+                        <input type="text" name="form-username" placeholder="用户名..." class="form-input form-control" id="register-username">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="sr-only" for="form-email">注册邮箱</label>
+                        <input type="text" name="form-email" placeholder="注册邮箱..." class="form-input form-control" id="register-email">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="sr-only" for="form-password-1">密码</label>
+                        <input type="password" name="form-password-1" placeholder="密码..." class="form-input form-control" id="register-password-1">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="sr-only" for="form-password-2">确认密码</label>
+                        <input type="password" name="form-password-2" placeholder="确认密码..." class="form-input form-control" id="register-password-2">
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="sr-only" for="form-captcha">验证码</label>
+                            <input type="text" id="captcha_1" name="captcha_1" class="form-input form-control" placeholder="验证码...">
+                        </div>
+
+                        <div class="col-sm-2">
+                            <span>
+                                <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
+                                    <img src="#" alt="captcha" class="captcha" style="margin-top: 5px; width: 85px; height: 36px">
+                                </a>
+                            </span>
+                            <input id="captcha_0" name="captcha_0" type="hidden" value="#">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="register-button" class="btn btn-pynxl">注册</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#register-button').click(function(){
+        $(".form-box .alert").remove();
+
+        $.ajax({
+            type:"POST",
+            url:"/usercenter/registercheck",
+            data:{
+                "username":$("#register-username").val(),
+                "email":$("#register-email").val(),
+                "password1":$("#register-password-1").val(),
+                "password2":$("#register-password-2").val(),
+                "key":$("#captcha_1").val(),
+                "hashkey":$("#captcha_0").val()
+            },
+            dataType:'json',
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                var errors = data["errors"];
+                if(errors.length==0){
+                    location.replace("/");
+                } else {
+                    var html = "<div class=\"alert alert-danger\">"
+                    for (var key in errors)
+                        html += errors[key]+"<br/>";
+                    html += "</div>";
+                    $(".form-top").after(html);
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+
+    function refreshCaptcha() {
+        $.getJSON("/usercenter/refreshcaptcha", function(json) {
+            var status = json['status'];
+            var captcha_key = json['captcha_key'];
+            var captcha_hashkey = json['captcha_hashkey'];
+
+            $("#captcha_0").attr("value", captcha_key);
+            $(".captcha").attr("src", captcha_hashkey);
+        });
+    }
+
+    refreshCaptcha();
+</script>
+
+{% endblock %}

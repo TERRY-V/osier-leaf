@@ -1,0 +1,81 @@
+{% extends "./homepage/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}<title>设置头像_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{%block main%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 column">
+            <a class="list-group-item">
+                <img src="{{user.img}}" alt="" width="40">
+                &nbsp;{{ user.username }} 
+            </a>
+            <a href="/usercenter/changeuseravatar"class="list-group-item active">
+                <strong>设置头像</strong>
+                <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a>
+            <a href="/usercenter/changeuserpassword"class="list-group-item">
+                修改密码
+                <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a>
+        </div>
+
+        <div class="col-md-9 column">
+            <div id="change-avatar" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>设置头像</strong>
+                    </h3>
+                </div>
+               
+                <div class="panel-body">
+                    <!--
+                    <div class="change-vatar-left">
+                        <div class="screen-avatar">
+                            <img id="tmp-avatar"  src="" alt="">
+                        </div>
+                        <form role="form" id="upload-avatar-form">
+                            <div class="form-group">
+                                <input type="button" id="save-avatar" class="btn btn-vmaig-auth" value="保存头像">
+                                <button type="button" class="btn btn-info" disabled="true">选择图片</button>
+                                <input type="file" id="upload-avatar" name="upload-avatar">
+                            </div>
+                        </form>
+                    </div>
+                    -->
+                    <div class="change-avatar-right">
+                        <h4>头像预览</h4>
+                        <div id="preview-pane">
+                            <div class="preview-container" style="width:100px;height:100px;overflow:hidden;">
+                                <img  src="{{user.img}}" alt="">
+                            </div>
+                        </div>
+                        大头像 100x100
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var jcrop_api, boundx, boundy;
+    var image = new Image();
+    var x, y, width, height = 0;
+    $('#tmp-tx').Jcrop({
+        onChange: updatePreview,
+        onSelect: updatePreview,
+        aspectRatio:1,
+        boxWidth:400,
+        boxHeight:300},
+        function(){
+            jcrop_api = this;
+        });
+</script>
+
+{% endblock %}

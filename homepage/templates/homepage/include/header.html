@@ -1,0 +1,72 @@
+<section class="header-section">
+    <div class="container">
+        <div class="header-main">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="/static/logo/logo.png" alt="{{ site_info.site_name }}" class="img-rounded img-responsive">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <form class="search-form" method="get" 
+                            action="{% ifequal column_now.column_search 1 %}{{ column_now.column_url }}{% else %}/cookbook/{% endifequal %}search/">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <select id="select" class="form-control" style="width: 75px; border-radius: 2px;">
+                                        {% for column in column_list %}
+                                            {% ifequal column.column_search 1 %}
+                                                <option id="{{ column.id }}" {% ifequal column.id column_now.id %}selected="selected"{% endifequal %}>{{ column.column_name }}</option>
+                                            {% endifequal %}
+                                        {% endfor %}
+                                    </select>
+                                </span>
+                                <span>
+                                    <input name="q" type="text" class="form-control" placeholder="搜索你感兴趣的内容..." value="{% if query %}{{ query }}{% endif %}">
+                                </span>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning" type="submit">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("select").change(function() {
+        var select = document.getElementById("select");
+        var id = "";
+        for(var i=0; i<select.options.length; i++) {
+            var isSelected = select.options[i].selected;
+            if (isSelected) {
+                id = select.options[i].id;
+                break;
+            }
+        }
+        if(id == '2') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/cookbook/search/");
+        } else if(id == '1') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/foodmaterial/search/");
+        } else if(id == '4') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/movie/search/");
+        } else if(id == '5') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/book/search/");
+        } else if(id == '6') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/image/search/");
+        } else if(id == '7') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/star/search/");
+        } else if(id == '8') {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/health/search/");
+        } else {
+            $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/cookbook/search/");
+        }
+    });
+</script>

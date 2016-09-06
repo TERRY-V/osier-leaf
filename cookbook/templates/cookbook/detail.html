@@ -1,0 +1,405 @@
+{% extends "./homepage/base.html" %}
+
+{% block title %}<title>{{ cookbook.name }}_{{ column_now.column_name }}_{{ site_info.site_name }}_{{ site_info.site_slogan }}</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 column">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li>
+                                <span class="glyphicon glyphicon-home"></span>
+                                <a href="/">首页</a>
+                            </li>
+                            <li>
+                                <a href="{{ column_now.column_url }}">
+                                    {{ column_now.column_name }}
+                                </a>
+                            </li>
+                            <li>
+                                <a>{{ cookbook.name }}</a>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="page-header">
+                        <h3>
+                            <strong>{{ cookbook.name|safe }}</strong>
+                        </h3>
+                        <h4>
+                            <small>发布于: {{ cookbook.get_time_string }} | 阅读: {{ cookbook.viewnum }}</small>
+                        </h4>
+                        <br/>
+                        <div class="labels">
+                            {% for label in cookbook.labels_as_list %}
+                                <a href="/cookbook/search/?tag={{ label }}"><span class="label label-pynxl-{{ forloop.counter|mod_lookup:6 }}">{{ label }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if cookbook.comment %}
+                        <div class="summary-pynxl">
+                            <span class="summary-header">
+                                摘要
+                            </span>
+                            <span class="summary-content">
+                                {{ cookbook.comment|slice:"150" }}
+                            </span>
+                        </div>
+                    {% endif %}
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="showimg">
+                                {% for cookbook_img in cookbook.crawlercookbookimg_set.all %}
+                                    <img src="{{ cookbook_img.imglink }}" alt="{{ cookbook.name }}" class="img-rounded img-responsive">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 id="introduce panel-title">
+                                <strong>做菜准备</strong>
+                            </h5>
+                        </div>
+                        <div class="panel-body">
+                            {% if cookbook.main_spice %}
+                                <p><span>主料：</span>{{ cookbook.main_spice }}</p>
+                            {% endif %}
+                            {% if cookbook.assist_spice %}
+                                <p><span>辅料：</span>{{ cookbook.assist_spice }}</p>
+                            {% endif %}
+                            {% if cookbook.cooks %}
+                                <p><span>厨具：</span>{{ cookbook.cooks }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 id="storage panel-title">
+                                <strong>做菜步骤</strong>
+                            </h5>
+                        </div>
+                        <ul class="list-group">
+                            {% for cookbook_step in cookbook.crawlercookbookstep_set.all %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-md-4 cookbook_step_img">
+                                            <img src="{{ cookbook_step.imglink|safe }}" alt="{{ cookbook.name }}的做法步骤：{{ forloop.counter }}" class="img-rounded img-responsive">
+                                        </div>
+                                        <div class="col-xs-8 col-md-4 cookbook_step_method">
+                                            <div>
+                                                <div class="cookbook_step_num">
+                                                    <img src="/static/cookbook/num/{{ forloop.counter }}.png" alt="{{ forloop.counter }}" class="img-rounded img-responsive">
+                                                </div>
+                                                {{ cookbook_step.step_method|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    {% if cookbook.trick %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 id="storage panel-title">
+                                    <strong>小窍门</strong>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{ cookbook.trick|safe }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <p class="declaration-pynxl">声明：本站内文章，未经网站允许或特别声明，严禁转载，但欢迎分享。</p>
+
+            <hr/>
+            
+            <div class="panel panel-default">
+                <div class="bd-reward-stl"><button id="bdRewardBtn"><span></span></button></div>
+                <script type="text/javascript" src="https://zz.bdstatic.com/zzdashang/js/bd-zz-reward.js"></script>
+            </div>
+
+            <div>
+                <div>
+                    <h6 class="heading text-center">
+                        <button id="support-button" class="btn btn-default" type="submit">
+                            <span id="span-support-id" class="glyphicon glyphicon-thumbs-up">
+                                推荐({{ cookbook.supportnum }})
+                            </span>
+                        </button>
+                        &nbsp;
+                        <button id="against-button" class="btn btn-default" type="submit"">
+                            <span id="span-against-id" class="glyphicon glyphicon-thumbs-down">
+                                反对({{ cookbook.againstnum }})
+                            </span>
+                        </button>
+                    </h6>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="comment-pynxl">
+                        <div class="comment-edit-pynxl clearfix">
+                            <form id="comment-form-pynxl">
+                                {% csrf_token %}
+                                <textarea id="comment" class="form-control" rows="4" placeholder="请输入评论 限200字!"></textarea>
+                                <button id="comment-button" type="submit" class="btn btn-comments-pynxl pull-right">
+                                    提交
+                                </button>
+                            </form>
+                        </div>
+
+                        <ul>
+                            <div id="hottest-comment">
+                                {% if hottest_comment_list %}
+                                    <div id="hottest-comment-heading">
+                                        <h5>
+                                            <strong>&nbsp;&nbsp;热门评论</strong>
+                                        </h5>
+                                    </div>
+                                    <div id="hottest-comment-list">
+                                        {% for hottest in hottest_comment_list %}
+                                            <li id="comment-each">
+                                                <div class="comment-avatar-pynxl">
+                                                    <img src="{{ hottest.user.img }}" width="40"></img>
+                                                </div>
+
+                                                <div class="comment-content-pynxl">
+                                                    <p class="comment-support pull-right">
+                                                        <a class="btn btn-link comment-support-button active" role="button" attrid="{{ hottest.id }}">
+                                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                                            ({{ hottest.supportnum }})
+                                                        </a>
+                                                    </p>
+
+                                                    <a>
+                                                        <h5>
+                                                            <strong>{{ hottest.user.username }}</strong>
+                                                        </h5>
+                                                    </a>
+
+                                                    <p>
+                                                        评论：
+                                                        {% autoescape on %}
+                                                        {{ hottest.comment }}
+                                                        {% endautoescape %}
+                                                    </p>
+
+                                                    <p>
+                                                        <h5>
+                                                            <small>{{ hottest.createtime|date:"Y-m-d H:i:s" }}</small>
+                                                        </h5>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div id="latest-comment">
+                                <div id="latest-comment-heading">
+                                    <h5>
+                                        <strong>&nbsp;&nbsp;最新评论</strong>
+                                    </h5>
+                                </div>
+
+                                <div id="latest-comment-list">
+                                    {% if latest_comment_list %}
+                                        {% for latest in latest_comment_list %}
+                                            <li id="comment-each">
+                                                <div class="comment-avatar-pynxl">
+                                                    <img src="{{ latest.user.img }}" width="40"></img>
+                                                </div>
+
+                                                <div class="comment-content-pynxl">
+                                                    <p class="comment-support pull-right">
+                                                        <a class="btn btn-link comment-support-button active" role="button" attrid="{{ latest.id }}">
+                                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                                            ({{ latest.supportnum }})
+                                                        </a>
+                                                    </p>
+
+                                                    <a>
+                                                        <h5>
+                                                            <strong>{{ latest.user.username }}</strong>
+                                                        </h5>
+                                                    </a>
+
+                                                    <p>
+                                                        评论：
+                                                        {% autoescape on %}
+                                                        {{ latest.comment }}
+                                                        {% endautoescape %}
+                                                    </p>
+
+                                                    <p>
+                                                        <h5>
+                                                            <small>{{ latest.createtime|date:"Y-m-d H:i:s" }}</small>
+                                                        </h5>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 column">
+            <div class="panel panel-pynxl">
+                <div class="panel-heading panel-heading-pynxl">
+                    <h5>
+                        <span class="glyphicon glyphicon-flag"></span>
+                        <strong>热门美食</strong>
+                    </h5>
+                </div>
+                <ul class="list-group" id="hottest-you-like">
+                    {% if hottest_list %}
+                        {% for hottest in hottest_list %}
+                            <li class="list-group-item">
+                                <span class="badge pull-left">
+                                    {{ hottest.viewnum }}
+                                </span>
+                                &nbsp;
+                                <a href="/cookbook/{{ hottest.srcid }}">{{ hottest.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#support-button').click(function() {
+        $.ajax({
+            type:"POST",
+            url:"vote/",
+            data:{"type":1},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data) {
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var againstnum = data["againstnum"];
+                    var html = "<span id=\"span-support-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;推荐(";
+                    html += supportnum;
+                    html += ")</span>";
+                    $("#span-support-id").replaceWith(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+
+    $('#against-button').click(function(){
+        $.ajax({
+            type:"POST",
+            url:"vote/",
+            data:{"type":2},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var againstnum = data["againstnum"];
+                    var html = "<span id=\"span-against-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;反对(";
+                    html += againstnum;
+                    html += ")</span>";
+                    $("#span-against-id").replaceWith(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>
+
+<script>
+    $('#comment-button').click(function() {
+        $.ajax({
+            type:"POST",
+            url:"comment/",
+            data:{"comment":$("#comment").val()},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                $("#comment").val("");
+                $("#latest-comment-list").prepend(data);
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+
+    $('.comment-support-button').click(function() {
+        var cid = $(this).attr("attrid");
+        var this_obj = $(this);
+        $.ajax({
+            type:"POST",
+            url:"support/",
+            data:{"cid":cid},
+            beforeSend:function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data) {
+                var status = data["status"];
+                if(status==0) {
+                    var supportnum = data["supportnum"];
+                    var html = "<span class=\"glyphicon glyphicon-thumbs-up\"></span> (";
+                    html += supportnum;
+                    html += ")";
+                    this_obj.html(html);
+                } else {
+                    alert("POST error!");
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>
+
+{% endblock %}

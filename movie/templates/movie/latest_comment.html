@@ -1,0 +1,33 @@
+                                            <li id="comment-each">
+                                                <div class="comment-avatar-pynxl">
+                                                    <img src="{{ latest.user.img }}" width="40"></img>
+                                                </div>
+
+                                                <div class="comment-content-pynxl">
+                                                    <p class="comment-support pull-right">
+                                                        <a class="btn btn-link comment-support-button active" role="button" attrid="{{ latest.id }}">
+                                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                                            ({{ latest.supportnum }})
+                                                        </a>
+                                                    </p>
+
+                                                    <a>
+                                                        <h5>
+                                                            <strong>{{ latest.user.username }}</strong>
+                                                        </h5>
+                                                    </a>
+
+                                                    <p>
+                                                        评论：
+                                                        {% autoescape on %}
+                                                        {{ latest.comment }}
+                                                        {% endautoescape %}
+                                                    </p>
+
+                                                    <p>
+                                                        <h5>
+                                                            <small>{{ latest.createtime|date:"Y-m-d H:i:s" }}</small>
+                                                        </h5>
+                                                    </p>
+                                                </div>
+                                            </li>

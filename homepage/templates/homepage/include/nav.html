@@ -1,0 +1,85 @@
+<section class="navbar-section">
+    <nav class="navbar navbar-main">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed btn btn-lg" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </button>
+                <a class="navbar-brand" href="/">{{ site_info.site_name }}</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-nav-main">
+                    {% for column in column_list %}
+                        {% if column.column_status %}
+                            <li{% ifequal column.id column_now.id %} class="active"{% endifequal %}>
+                                <a href="{{ column.column_url }}">
+                                    <span class="{{ column.column_icon }}" aria-hidden="true"></span>
+                                    &nbsp;{{ column.column_name }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right navbar-nav-main">
+                    {% if not user.is_authenticated %}
+                        <li>
+                            <a href="/usercenter/login" style="padding-right:0px;cursor:pointer;">登陆</a>
+                        </li>
+                        <li>
+                            <a href="/usercenter/register" style="padding-right:0px;cursor:pointer">注册</a>
+                        </li>
+                    {% else %}
+                        <li class="dropdown">
+                            <a href="javascript:;" style="padding:5px;" data-toggle="dropdown">
+                                <img src="{{ user.img }}" alt="" width="40"/>
+                                {{ user.username }}
+                                <strong class="caret"></strong>
+                                <span class="badge" style="background-color: #D94600;">0</span>
+                            </a>
+                            <ul class="dropdown-menu navbar-right">
+                                <li>
+                                    <a href="/usercenter/changeavatar">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        更换头像
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/usercenter/changepassword">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                        更改密码
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="logout" href="javascript:;">
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                    退出
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<script>
+    $("#logout").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"/usercenter/logoutcheck",
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                location.reload(); 
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Page Description -->
+        {%block title %} {% endblock %}
+        {%block keywords %} {% endblock %}
+        {%block description %} {% endblock %}
+
+        <meta name="author" content="{{ site_info.site_author }}"/>
+        <meta name="copyright" content="{{ site_info.site_copyright }}"/>
+		<meta name="baidu-site-verification" content="7u2x0Ydxve" />
+        
+        <link rel="shortcut icon" href="/static/images/favicon.ico">
+
+        <!-- Bootstrap -->
+        <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <!-- jQuery latest plugins -->
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <!-- jQuery cookie plugins -->
+        <script src="/static/jquery/jquery.cookie.js"></script>
+        <!-- JavaScript grid layout Masonry -->
+        <script src="/static/js/masonry.pkgd.min.js"></script>
+        <!-- JavaScript imagesloaded -->
+        <script src="/static/js/imagesloaded.pkgd.min.js"></script>
+
+        <!-- self-defined css -->
+        <link href="/static/css/form-element.css" rel="stylesheet">
+        <link href="/static/css/pynxl.css" rel="stylesheet">
+
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?87b3fd6b9f9527959f17b8037495b2ad";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+        <script>
+        (function(){
+           var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?8fa9c486970ef40892de70c010642c8f":"https://jspassport.ssl.qhimg.com/11.0.1.js?8fa9c486970ef40892de70c010642c8f";
+           document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+        </script>
+
+        <script>
+            window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["weixin","tsina","bdhome","tieba","qzone","sqq","tqq","mshare","bdysc","renren","bdxc","kaixin001","tqf","douban","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","fbook","twi","linkedin","h163","evernotecn","copy","print"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"},"image":{"viewList":["weixin","tsina","qzone","tqq","tieba"],"viewText":"分享到：","viewSize":"24"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    </head>
+    <body>
+        {% include "./homepage/include/nav.html" %}
+        {% include "./homepage/include/header.html" %}
+        {% include "./homepage/include/menu.html" %}
+        {% block main %} {% endblock %}
+        {% include "./homepage/include/footer.html"%}
+    </body>
+</html>
