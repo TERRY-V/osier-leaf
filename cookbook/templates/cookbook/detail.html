@@ -96,12 +96,12 @@
                                         <div class="col-xs-4 col-md-4 cookbook_step_img">
                                             <img src="{{ cookbook_step.imglink|safe }}" alt="{{ cookbook.name }}的做法步骤：{{ forloop.counter }}" class="img-rounded img-responsive">
                                         </div>
-                                        <div class="col-xs-8 col-md-4 cookbook_step_method">
+                                        <div class="col-xs-8 col-md-8 cookbook_step_method">
                                             <div>
                                                 <div class="cookbook_step_num">
                                                     <img src="/static/cookbook/num/{{ forloop.counter }}.png" alt="{{ forloop.counter }}" class="img-rounded img-responsive">
                                                 </div>
-                                                {{ cookbook_step.step_method|safe }}
+						{{ cookbook_step.step_method|safe }}
                                             </div>
                                         </div>
                                     </div>
