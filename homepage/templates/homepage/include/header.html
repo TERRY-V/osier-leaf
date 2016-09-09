@@ -2,38 +2,58 @@
     <div class="container">
         <div class="header-main">
             <div class="row">
-                <div class="col-md-6 hidden-xs">
-                    <div class="logo">
-                        <a href="/">
-                            <img src="/static/logo/logo.png" alt="{{ site_info.site_name }}" class="img-rounded img-responsive">
-                        </a>
-                    </div>
+                <div class="col-md-3 hidden-xs logo">
+                    <a href="/">
+                        <img src="/static/logo/logo.png" alt="{{ site_info.site_name }}" class="img-rounded img-responsive">
+                    </a>
                 </div>
-                <div class="col-md-6">
-                    <div>
-                        <form class="search-form" method="get" 
-                            action="{% ifequal column_now.column_search 1 %}{{ column_now.column_url }}{% else %}/cookbook/{% endifequal %}search/">
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <select id="select" class="form-control" style="width: 75px; border-radius: 2px;">
-                                        {% for column in column_list %}
-                                            {% ifequal column.column_search 1 %}
-                                                <option id="{{ column.id }}" {% ifequal column.id column_now.id %}selected="selected"{% endifequal %}>{{ column.column_name }}</option>
-                                            {% endifequal %}
-                                        {% endfor %}
-                                    </select>
-                                </span>
-                                <span>
-                                    <input name="q" type="text" class="form-control" placeholder="搜索你感兴趣的内容..." value="{% if query %}{{ query }}{% endif %}">
-                                </span>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning" type="submit">
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
+                <div class="col-md-6 search-box">
+                    <form class="search-form" method="get" 
+                        action="{% ifequal column_now.column_search 1 %}{{ column_now.column_url }}{% else %}/cookbook/{% endifequal %}search/">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <select id="select" class="form-control" style="width: 75px; border-radius: 2px;">
+                                    {% for column in column_list %}
+                                        {% ifequal column.column_search 1 %}
+                                            <option id="{{ column.id }}" {% ifequal column.id column_now.id %}selected="selected"{% endifequal %}>{{ column.column_name }}</option>
+                                        {% endifequal %}
+                                    {% endfor %}
+                                </select>
+                            </span>
+                            <span>
+                                <input name="q" type="text" class="form-control" placeholder="搜索你感兴趣的内容..." value="{% if query %}{{ query }}{% endif %}">
+                            </span>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" type="submit">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 hidden-xs contact-info">
+                    <ul class="list-inline pull-right">
+                        <li>
+                            <a title="官方微博" href="http://www.weibo.com/terrynotes" target="_blank">
+                                <img src="/static/images/head-icon-1.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a title="支付宝" href="#" target="_blank">
+                                <img src="/static/images/head-icon-2.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a title="微信" href="#" target="_blank">
+                                <img src="/static/images/head-icon-3.png">
+                            </a>
+                        </li>
+                        <li>
+                            <a title="移动端" href="#" target="_blank">
+                                <img src="/static/images/head-icon-4.png">
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
