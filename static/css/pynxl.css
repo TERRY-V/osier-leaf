@@ -29,7 +29,6 @@ body {
 	border-color: #fff;
 	border-radius: 2px;
 	border-top: 2px solid #fa7d3c;
-	height: 48px;
 }
 
 .navbar-header>a {
@@ -44,7 +43,9 @@ body {
 .navbar-nav-main>li>a:hover,
 .navbar-nav-main>li>a:active,
 .navbar-nav-main>li>a:focus {
-	outline: 0; opacity: 0.6; background: #fff;
+	outline: 0;
+	opacity: 0.6;
+	background: #b4daef;
 }
 
 /* 导航头 */
