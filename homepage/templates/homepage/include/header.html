@@ -35,22 +35,22 @@
                     <ul class="list-inline pull-right">
                         <li>
                             <a title="官方微博" href="http://www.weibo.com/terrynotes" target="_blank">
-                                <img src="/static/images/head-icon-1.png">
+                                <img src="/static/images/head-icon-1.png" class="img-responsive">
                             </a>
                         </li>
                         <li>
-                            <a title="支付宝" href="#" target="_blank">
-                                <img src="/static/images/head-icon-2.png">
+                            <a title="官方微信" href="#" data-toggle="popover">
+                                <img src="/static/images/head-icon-3.png" class="img-responsive">
                             </a>
                         </li>
                         <li>
-                            <a title="微信" href="#" target="_blank">
-                                <img src="/static/images/head-icon-3.png">
+                            <a title="Twitter" href="#" target="_blank">
+                                <img src="/static/images/head-icon-2.png" class="img-responsive">
                             </a>
                         </li>
                         <li>
                             <a title="移动端" href="#" target="_blank">
-                                <img src="/static/images/head-icon-4.png">
+                                <img src="/static/images/head-icon-4.png" class="img-responsive">
                             </a>
                         </li>
                     </ul>
@@ -88,5 +88,15 @@
         } else {
             $(this).parents('.input-group-btn').parents('.search-form').attr("action", "/cookbook/search/");
         }
+    });
+
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            placement : 'bottom',
+            trigger: 'hover',
+            html: true,
+            title: "扫描关注柳梢儿官方微信",
+            content: "<img src='/static/images/weixin.jpg' class='img-responsive'></img>"
+        });
     });
 </script>
