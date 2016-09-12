@@ -18,6 +18,9 @@ class Website(models.Model):
     site_email = models.CharField('邮箱', max_length=45, blank=True)
     site_phone = models.CharField('联系电话', max_length=200, blank=True)
 
+    def get_friendlinks(self):
+        return self.friendlinks_set.all().order_by('linkorder')[:10]
+
     class Meta:
         managed = False
         verbose_name = '网站信息管理'
@@ -27,6 +30,7 @@ class FriendLinks(models.Model):
     site = models.ForeignKey(Website, on_delete=models.CASCADE)
     linkname = models.CharField('链接名称', max_length=200, blank=True)
     linkurl = models.CharField('链接地址', max_length=200, blank=True)
+    linkorder = models.IntegerField('栏目排序', default=0)
     createtime = models.DateTimeField('创建时间', auto_now_add=True)
 
     class Meta:

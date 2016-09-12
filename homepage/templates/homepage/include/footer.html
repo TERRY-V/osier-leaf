@@ -1,7 +1,7 @@
 <section class="footer-section">
-    <div class="footer1-pynxl">
+    <div class="footer1-pynxl hidden-xs">
         <div class="container">
-            <div class="col-xs-6 col-md-4">
+            <div class="col-md-4">
                 <dt>关于柳梢儿</dt>
                 <dl class="list-unstyled">
                     <dd>
@@ -21,7 +21,7 @@
                     </dd>
                 </dl>
             </div>
-            <div class="col-xs-6 col-md-4">
+            <div class="col-md-4">
                 <dt>手机上柳梢儿</dt>
                 <dl class="list-unstyled">
                     <dd>
@@ -38,7 +38,7 @@
                     </dd>
                 </dl>
             </div>
-            <div class="col-xs-6 col-md-4">
+            <div class="col-md-4">
                 <dt>关注我们</dt>
                 <ul class="list-inline">
                     <li>
@@ -70,11 +70,11 @@
             <div class="links-pynxl">
                 <p>
                     <span>
-                        旗下网站:&nbsp;
-                        {% for friendlink in site_info.friendlinks_set.all %}
-                            {% ifnotequal forloop.counter 1 %}{% endifnotequal %}
+                        友情链接:&nbsp;
+                        {% for friendlink in site_info.get_friendlinks %}
                             <a href="{{ friendlink.linkurl }}" target="_blank">{{ friendlink.linkname }}</a>
-                        {% endfor %}
+			{% endfor %}
+			<a href="/about/links/" target="_blank">更多链接&gt;&gt;</a>
                     </span>
                 </p>
             </div>
