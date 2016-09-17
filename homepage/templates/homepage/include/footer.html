@@ -43,25 +43,30 @@
                 <ul class="list-inline">
                     <li>
                         <a href="http://www.weibo.com/terryniu" target="_blank">
-                            <img src="/static/images/icon-weibo.png" class="img-responsive" width="32px">
+                            <i class="icon-weibo icon-2x"></i>
                         </a>
                     </li>
                     <li>
                         <a href="#" data-toggle="popover">
-                            <img src="/static/images/icon-weixin.png" class="img-responsive" width="32px">
+                            <i class="icon-pinterest icon-2x"></i>
                         </a>
                     </li>
                     <li>
                         <a href="http://twitter.com/terryniu" target="_blank">
-                            <img src="/static/images/icon-twitter.png" class="img-responsive" width="32px">
+                            <i class="icon-twitter-sign icon-2x"></i>
                         </a>
                     </li>
                     <li>
                         <a href="http://github.com/TERRY-V" target="_blank">
-                            <img src="/static/images/icon-github.png" class="img-responsive" width="32px">
+                            <i class="icon-github icon-2x"></i>
                         </a>
                     </li>
                 </ul>
+                <div>
+                    <p>
+		                <span>服务热线: 010-50846018</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -73,8 +78,8 @@
                         友情链接:&nbsp;
                         {% for friendlink in site_info.get_friendlinks %}
                             <a href="{{ friendlink.linkurl }}" target="_blank">{{ friendlink.linkname }}</a>
-			{% endfor %}
-			<a href="/about/links/" target="_blank">更多链接&gt;&gt;</a>
+			            {% endfor %}
+			            <a href="/about/links/" target="_blank">更多链接&gt;&gt;</a>
                     </span>
                 </p>
             </div>
