@@ -50,7 +50,7 @@ body {
 .navbar-nav-main>li>a:focus {
 	outline: 0;
 	opacity: 0.6;
-	background: #b4daef;
+	background: #eee;
 }
 
 /* 导航头 */
