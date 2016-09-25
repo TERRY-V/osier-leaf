@@ -13,20 +13,22 @@
         <meta name="author" content="{{ site_info.site_author }}"/>
         <meta name="copyright" content="{{ site_info.site_copyright }}"/>
 		<meta name="baidu-site-verification" content="7u2x0Ydxve" />
+        <meta name="baidu_union_verify" content="e55aae073cac8ced2e7c698f311607b6">
         
         <link rel="shortcut icon" href="/static/images/favicon.ico">
 
         <!-- Bootstrap -->
-        <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-        <!-- jQuery latest plugins -->
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        
+        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- jQuery latest plugins -->
+        <script src="/static/jquery/jquery-3.1.1.min.js"></script>
         <!-- jQuery cookie plugins -->
         <script src="/static/jquery/jquery.cookie.js"></script>
+
         <!-- JavaScript grid layout Masonry -->
         <script src="/static/js/masonry.pkgd.min.js"></script>
         <!-- JavaScript imagesloaded -->
@@ -48,13 +50,6 @@
         </script>
 
         <script>
-            (function() {
-                var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?8fa9c486970ef40892de70c010642c8f":"https://jspassport.ssl.qhimg.com/11.0.1.js?8fa9c486970ef40892de70c010642c8f";
-                document.write('<script src="' + src + '" id="sozz"><\/script>');
-            })();
-        </script>
-
-        <script>
             window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["weixin","tsina","bdhome","tieba","qzone","sqq","tqq","mshare","bdysc","renren","bdxc","kaixin001","tqf","douban","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","fbook","twi","linkedin","h163","evernotecn","copy","print"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"},"image":{"viewList":["weixin","tsina","qzone","tqq","tieba"],"viewText":"分享到：","viewSize":"24"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     </head>
@@ -63,6 +58,7 @@
         {% include "./homepage/include/header.html" %}
         {% include "./homepage/include/menu.html" %}
         {% block main %} {% endblock %}
-        {% include "./homepage/include/footer.html"%}
+        {% include "./homepage/include/footer.html" %}
+        {% include "./homepage/include/back2top.html" %}
     </body>
 </html>
