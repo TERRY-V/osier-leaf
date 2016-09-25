@@ -192,6 +192,27 @@ body {
 	font-weight: 700;
 }
 
+/* 返回顶部 */
+.back2top {
+	position: fixed;
+	right: 30px;
+	bottom: 30px;
+	border-radius: 3px;
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	line-height: 42px;
+	transition: .5s;
+	/* transform: translate3d(100px,0,0); */
+	background: rgba(0,0,0,.5);
+	color: #fff;
+	cursor: pointer;
+}
+
+.back2top>a, .back2top>a:hover, .back2top>a:focus {
+	color: #fff;
+}
+
 /* 表单 */
 .form-box {
 	padding-top: 5px;
@@ -245,6 +266,16 @@ body {
 
 .form-bottom form .input-error {
 	border-color: #de995e;
+}
+
+/* 表格 */
+.table-borderless>tbody>tr>td, 
+.table-borderless>tbody>tr>th, 
+.table-borderless>tfoot>tr>td, 
+.table-borderless>tfoot>tr>th, 
+.table-borderless>thead>tr>td, 
+.table-borderless>thead>tr>th {
+	border: 0px;
 }
 
 /* 标签样式 */
