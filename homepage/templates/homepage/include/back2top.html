@@ -1,0 +1,28 @@
+<section class="back2top-section">
+    <div class="back2top">
+        <a href="#"><i class="fa fa-angle-up fa-2x"></i></a>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function(){
+        $(".back2top").hide();
+
+        $(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                        $('.back2top').fadeIn();
+                    } else {
+                        $('.back2top').fadeOut();
+                    }
+                });
+                
+            $('.back2top .fa-angle-up').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 800);
+                return false;
+            });
+        });
+    });
+</script>
