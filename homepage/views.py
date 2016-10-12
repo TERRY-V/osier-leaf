@@ -28,11 +28,11 @@ def index(request):
     column_list = Column.objects.order_by('column_order')
 
     newest_cookbook_list = CrawlerCookbookInfo.objects.order_by('-createtime')[:9]
-    support_cookbook_list = CrawlerCookbookInfo.objects.order_by('-supportnum')[:10]
+    support_cookbook_list = CrawlerCookbookInfo.objects.order_by('-supportnum')[:8]
     hottest_movie_list = CrawlerMovieInfo.objects.filter(id__lt=29719).order_by('-viewnum')[:8]
-    support_movie_list = CrawlerMovieInfo.objects.filter(id__lt=29719).order_by('-supportnum')[:10]
+    support_movie_list = CrawlerMovieInfo.objects.filter(id__lt=29719).order_by('-supportnum')[:8]
     hottest_book_list = CrawlerBookInfo.objects.order_by('-viewnum')[:8]
-    support_book_list = CrawlerBookInfo.objects.order_by('-supportnum')[:10]
+    support_book_list = CrawlerBookInfo.objects.order_by('-supportnum')[:8]
 
     context = {'site_info': site_info, 
             'column_now': column_now,

@@ -18,16 +18,19 @@ class Website(models.Model):
     site_email = models.CharField('邮箱', max_length=45, blank=True)
     site_phone = models.CharField('联系电话', max_length=200, blank=True)
 
-    def get_friendlinks(self):
-        return self.friendlinks_set.all().order_by('linkorder')[:10]
-
     class Meta:
         managed = False
         verbose_name = '网站信息管理'
         verbose_name_plural = '网站信息管理'
 
+    def get_friendlinks(self):
+        return self.friendlinks_set.all().order_by('linkorder')[:10]
+
+    def __str__(self):
+        return self.site_name.encode('utf-8')
+
 class FriendLinks(models.Model):
-    site = models.ForeignKey(Website, on_delete=models.CASCADE)
+    site = models.ForeignKey(Website, verbose_name='所属站点', on_delete=models.CASCADE)
     linkname = models.CharField('链接名称', max_length=200, blank=True)
     linkurl = models.CharField('链接地址', max_length=200, blank=True)
     linkorder = models.IntegerField('栏目排序', default=0)
@@ -36,6 +39,10 @@ class FriendLinks(models.Model):
     class Meta:
         verbose_name = '友情链接管理'
         verbose_name_plural = '友情链接管理'
+
+    def formatCreateTime(self):
+        return self.createtime.strftime("%Y-%m-%d %H:%M:%S")
+    formatCreateTime.short_description = '创建时间'
 
 class Column(models.Model):
     column_name = models.CharField('栏目名称', max_length=30)
@@ -57,4 +64,8 @@ class News(models.Model):
     class Meta:
         verbose_name = '新闻动态管理'
         verbose_name_plural = '新闻动态管理'
+
+    def formatCreateTime(self):
+        return self.createtime.strftime("%Y-%m-%d %H:%M:%S")
+    formatCreateTime.short_description = '发布时间'
 
