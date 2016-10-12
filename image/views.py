@@ -100,7 +100,7 @@ def getItem(request):
     except PageNotAnInteger:
         images = paginator.page(1)
     except EmptyPage:
-        images = paginator.page(paginator.num_pages)
+        images = []
 
     items = []
     for image in images:
