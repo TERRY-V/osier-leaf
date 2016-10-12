@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^image/', include('image.urls')),
     url(r'^star/', include('star.urls')),
     url(r'^health/', include('health.urls')),
+    url(r'^shopping/', include('shopping.urls')),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^usercenter/', include('usercenter.urls')),
