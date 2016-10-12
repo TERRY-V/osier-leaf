@@ -1,5 +1,5 @@
 <section class="navbar-section">
-    <nav class="navbar navbar-main">
+    <nav class="navbar navbar-main navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed btn btn-lg" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
@@ -14,7 +14,7 @@
                         {% if column.column_status %}
                             <li{% ifequal column.id column_now.id %} class="active"{% endifequal %}>
                                 <a href="{{ column.column_url }}">
-                                    <span class="{{ column.column_icon }}" aria-hidden="true"></span>
+                                    <i class="{{ column.column_icon }}" aria-hidden="true"></i>
                                     &nbsp;{{ column.column_name }}
                                 </a>
                             </li>
@@ -37,10 +37,10 @@
                 <ul class="nav navbar-nav navbar-right navbar-nav-main">
                     {% if not user.is_authenticated %}
                         <li>
-                            <a href="/usercenter/login">登陆</a>
+                            <a href="/usercenter/login"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;登陆</a>
                         </li>
                         <li>
-                            <a href="/usercenter/register">注册</a>
+                            <a href="/usercenter/register"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;注册</a>
                         </li>
                     {% else %}
                         <li class="dropdown">

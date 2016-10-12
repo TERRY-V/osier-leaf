@@ -1,4 +1,4 @@
-{% extends "./homepage/base.html" %}
+{% extends "homepage/base.html" %}
 
 {% load staticfiles %}
 
@@ -15,7 +15,8 @@
                 <div class="panel-body">
                     <div class="page-header page-header-pynxl">
                         <h4>
-                            <span class="glyphicon glyphicon-apple"></span>&nbsp;美食风云榜
+                            <i class="fa fa-cutlery" aria-hidden="true"></i>
+                            &nbsp;美食风云榜
                             <small><a href="/cookbook/">更多&gt;</a></small>
                         </h4>
                     </div>
@@ -40,39 +41,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-pynxl">
-                <div class="panel-heading panel-heading-pynxl">
-                    <h5>
-                        <span class="glyphicon glyphicon-flag"></span>
-                        <strong>热门美食</strong>
-                    </h5>
-                </div>
-                <ul class="list-group" id="support-you-like">
-                    {% if support_cookbook_list %}
-                        {% for support in support_cookbook_list %}
-                            <li class="list-group-item">
-                                <span class="badge pull-left">
-                                    {{ support.viewnum }}
-                                </span>
-                                &nbsp;
-                                <a href="/cookbook/{{ support.srcid }}">{{ support.name }}</a>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8">
             <div class="panel panel-pynxl">
                 <div class="panel-body">
                     <div class="page-header page-header-pynxl">
                         <h4>
-                            <span class="glyphicon glyphicon-film"></span>&nbsp;电影风云榜
+                            <span class="glyphicon glyphicon-film"></span>
+                            &nbsp;电影风云榜
                             <small><a href="/movie/">更多&gt;</a></small>
                         </h4>
                     </div>
@@ -97,42 +71,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-pynxl">
-                <div class="panel-heading panel-heading-pynxl">
-                    <h5>
-                        <span class="glyphicon glyphicon-flag"></span>
-                        <strong>热门电影</strong>
-                    </h5>
-                </div>
-                <ul class="list-group" id="support-you-like">
-                    {% if support_movie_list %}
-                        {% for support in support_movie_list %}
-                            <li class="list-group-item">
-                                <span class="badge pull-left">
-                                    {{ support.viewnum }}
-                                </span>
-                                &nbsp;
-                                <a href="/movie/{{ support.srcid }}">{{ support.moviename }}</a>
-                                <span class="pull-right" style="color: red">
-                                    {{ support.score }}
-                                </span>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8">
             <div class="panel panel-pynxl">
                 <div class="panel-body">
                     <div class="page-header page-header-pynxl">
                         <h4>
-                            <span class="glyphicon glyphicon-book"></span>&nbsp;图书风云榜
+                            <span class="glyphicon glyphicon-book"></span>
+                            &nbsp;图书风云榜
                             <small><a href="/book/">更多&gt;</a></small>
                         </h4>
                     </div>
@@ -159,10 +103,76 @@
             </div>
         </div>
         <div class="col-md-4">
+            <div class="panel panel-default panel-intro-pynxl">
+                <div class="panel-heading heading">
+                    <h5>
+                        <i class="fa fa-leaf" aria-hidden="true"></i>
+                        <strong>柳梢儿(Liushaoer.com)</strong>
+                    </h5>
+                </div>
+                <div class="panel-body">
+                    <div class="intro">
+                            <p>
+                                <i class="fa fa-quote-left fa-3x fa-pull-left fa-border" aria-hidden="true"></i>
+                                {{ site_info.site_description }}
+                            </p>
+                    </div>
+                    <div class="button-group">
+                        <a class="btn btn-success" href="/usercenter/login">登录</a>
+                        &nbsp;
+                        <a class="btn btn-success" href="/usercenter/register">注册</a>
+                    </div>
+                </div>
+            </div>
             <div class="panel panel-pynxl">
                 <div class="panel-heading panel-heading-pynxl">
                     <h5>
-                        <span class="glyphicon glyphicon-flag"></span>
+                        <i class="fa fa-cutlery" aria-hidden="true"></i>
+                        <strong>热门美食</strong>
+                    </h5>
+                </div>
+                <ul class="list-group" id="support-you-like">
+                    {% if support_cookbook_list %}
+                        {% for support in support_cookbook_list %}
+                            <li class="list-group-item">
+                                <span class="badge pull-left">
+                                    {{ support.viewnum }}
+                                </span>
+                                &nbsp;
+                                <a href="/cookbook/{{ support.srcid }}">{{ support.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="panel panel-pynxl">
+                <div class="panel-heading panel-heading-pynxl">
+                    <h5>
+                        <span class="glyphicon glyphicon-film"></span>
+                        <strong>热门电影</strong>
+                    </h5>
+                </div>
+                <ul class="list-group" id="support-you-like">
+                    {% if support_movie_list %}
+                        {% for support in support_movie_list %}
+                            <li class="list-group-item">
+                                <span class="badge pull-left">
+                                    {{ support.viewnum }}
+                                </span>
+                                &nbsp;
+                                <a href="/movie/{{ support.srcid }}">{{ support.moviename }}</a>
+                                <span class="pull-right" style="color: red">
+                                    {{ support.score }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="panel panel-pynxl">
+                <div class="panel-heading panel-heading-pynxl">
+                    <h5>
+                        <span class="glyphicon glyphicon-book"></span>
                         <strong>热门图书</strong>
                     </h5>
                 </div>

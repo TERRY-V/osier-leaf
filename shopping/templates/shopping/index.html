@@ -19,48 +19,56 @@
                                 {{ column_now.column_name }}
                             </h4>
                         </li>
-                        <li role="presentation" {% ifequal sort 3 %}class="active"{% endifequal %}><a href="/book/search/?q={{ query }}&sort=3">推荐</a></li>
-                        <li role="presentation" {% ifequal sort 2 %}class="active"{% endifequal %}><a href="/book/search/?q={{ query }}&sort=2">热门</a></li>
-                        <li role="presentation" {% ifequal sort 1 %}class="active"{% endifequal %}><a href="/book/search/?q={{ query }}&sort=1">最新</a></li>
+                        <li role="presentation"><a href="/shopping/search/?q=&sort=3">推荐</a></li>
+                        <li role="presentation"><a href="/shopping/search/?q=&sort=2">热门</a></li>
+                        <li role="presentation" class="active"><a href="/shopping/search/?q=&sort=1">最新</a></li>
                     </ul>
                 </div>
 
-                {% if book_list %}
+                {% if shopping_list %}
                     <ul class="list-group">
-                        {% for book in book_list %}
+                        {% for shopping in shopping_list %}
                             <li class="article list-group-item">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-3">
                                         <div class="artitle-img">
-                                            <img src="http://211.157.161.43/img001/{{ book.crawlerbookimg_set.first.imgpath }}" style="height: 200px; width: 132px" class="img-rounded img-responsive">
+                                            <img src="{{ shopping.crawlershoppingimg_set.first.imglink }}" alt="{{ shopping.crawlershoppingimg_set.first.name }}" style="height: 100px; width: 150px" class="img-rounded img-responsive">
                                         </div>
                                     </div>
                                     <div class="col-xs-8 col-md-9">
                                         <div class="article-title clearfix">
                                             <h4>
-                                                <a href="/book/{{ book.srcid }}">
-                                                    <strong>{{ book.bookname|slice:"50" }}</strong>
-                                                    <small>{{ book.get_release_time_string|slice:"4" }}</small>
+                                                <a href="/shopping/{{ shopping.srcid }}">
+                                                    <strong>{{ shopping.name|slice:"50" }}</strong>
                                                 </a>
                                             </h4>
+                                        </div>
+
+                                        <div class="article-labels">
+                                            {% for label in shopping.labels_as_list %}
+                                                <a href="/shopping/search/?tag={{ label }}"><span class="label label-pynxl-{{ forloop.counter|mod_lookup:6 }}">{{ label }}</span></a>
+                                            {% endfor %}
                                         </div>
 
                                         </br>
 
                                         <div class="atricle-content">
                                             <div>
-                                                <p>{{ book.story|slice:"125" }}...</p>
+                                                <p>{{ shopping.comment|slice:"125" }}...</p>
                                             </div>
                                         </div>
 
                                         <div class="article-info text-right">
                                             <span>
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                {{ book.get_time_string }}
+                                                {{ shopping.get_time_string }}
+                                            </span>
+                                            <span>
+                                                <span class="glyphicon glyphicon-comment"></span>
+                                                {{ shopping.crawlershoppingcomment_set.count }}
                                             </span>
                                             <span>
                                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                                {{ book.viewnum }}
+                                                {{ shopping.viewnum }}
                                             </span>
                                         </div>
                                     </div>
@@ -76,21 +84,21 @@
             <div class="text-center">
                 <ul class="pagination">
                     <li>
-                        {% if book_list.has_previous %}
-                            <a href="/book/search/?q={{ query }}&page={{ book_list.previous_page_number }}" aria-label="Previous">
+                        {% if shopping_list.has_previous %}
+                            <a href="/shopping/search/?q=&page={{ shopping_list.previous_page_number }}&sort=1" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         {% endif %}
                     </li>
 
                     {% for page_num in page_range %}
-                        {% ifequal page_num book_list.number %}
+                        {% ifequal page_num shopping_list.number %}
                             <li class="active">
-                                <span class="current">{{ book_list.number }}</span>
+                                <span class="current">{{ shopping_list.number }}</span>
                             </li>
                         {% else %}
                             <li>
-                                <a href="/book/search/?q={{ query }}&page={{ page_num }}"">
+                                <a href="/shopping/search/?q=&page={{ page_num }}&sort=1">
                                     <span>{{ page_num }}</span>
                                 </a>
                             </li>
@@ -98,8 +106,8 @@
                     {% endfor %}  
 
                     <li>
-                        {% if book_list.has_next %}
-                            <a href="/book/search/?q={{ query }}&page={{ book_list.next_page_number }}" aria-label="Next">
+                        {% if shopping_list.has_next %}
+                            <a href="/shopping/search/?q=&page={{ shopping_list.next_page_number }}&sort=1" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         {% endif %}
@@ -114,7 +122,7 @@
                 <div class="panel-heading">
                     <h5>
                         <span class="glyphicon glyphicon-flag"></span>
-                        <strong>热门图书</strong>
+                        <strong>热门美食</strong>
                     </h5>
                 </div>
                 <ul class="list-group" id="hottest-you-like">
@@ -125,10 +133,7 @@
                                     {{ hottest.viewnum }}
                                 </span>
                                 &nbsp;
-                                <a href="/book/{{ hottest.srcid }}">{{ hottest.bookname }}</a>
-                                <span class="pull-right" style="color: red">
-                                    {{ hottest.score }}
-                                </span>
+                                <a href="/shopping/{{ hottest.srcid }}">{{ hottest.name }}</a>
                             </li>
                         {% endfor %}
                     {% endif %}
