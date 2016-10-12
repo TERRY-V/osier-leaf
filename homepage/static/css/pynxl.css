@@ -325,6 +325,16 @@ body {
 	background-color: #D94600;
 }
 
+.panel-intro-pynxl .heading,
+.panel-intro-pynxl .button-group {
+	text-align: center;
+}
+
+.panel-intro-pynxl .intro {
+	line-height: 25px;
+	color: #777;
+}
+
 /* 分类列表 */
 .category-ul-pynxl {
 	margin-top: 2px;
