@@ -1,3 +1,3 @@
 service nginx stop
-nginx -p /home/niuxl/pynxl -c nginx.conf
+nginx -p /home/niuxl/osier-leaf -c nginx.conf
 
