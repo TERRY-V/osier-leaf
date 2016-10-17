@@ -9,6 +9,7 @@ from django.views.generic import View
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -195,23 +196,19 @@ def register(request):
             'column_list': column_list,}
     return render(request, 'usercenter/register.html', context)
 
+@login_required(login_url='/usercenter/login')
 def changeAvatar(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
-    if not request.user.is_authenticated():
-        raise PermissionDenied
 
     context = {'site_info': site_info, 
             'column_list': column_list,}
     return render(request, 'usercenter/changeavatar.html', context)
 
+@login_required(login_url='/usercenter/login')
 def changePassword(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
-    if not request.user.is_authenticated():
-        raise PermissionDenied
 
     context = {'site_info': site_info, 
             'column_list': column_list,}
