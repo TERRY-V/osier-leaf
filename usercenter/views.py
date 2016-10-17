@@ -55,16 +55,20 @@ class UserCenter(View):
         key = request.POST.get("key")
         hashkey = request.POST.get("hashkey")
 
-        errors = []
+        context = {"status": 0}
         if self.verify_captcha(key, hashkey):
             user = auth.authenticate(username=username, password=password)
             if user is not None:
                 auth.login(request, user)
             else:
-                errors.append("用户名或密码不正确")
+                context["status"] = -1
+                context["errors"] = []
+                context["errors"].append(u"用户名或密码错误")
         else:
-            errors.append("验证码错误")
-        return HttpResponse(json.dumps({"errors": errors}), content_type="application/json")
+            context["status"] = -1
+            context["errors"] = []
+            context["errors"].append(u"验证码错误")
+        return HttpResponse(json.dumps(context), content_type="application/json")
 
     def register(self, request):
         username = request.POST.get("username")
@@ -73,63 +77,68 @@ class UserCenter(View):
         hashkey = request.POST.get("hashkey")
 
         form = UserCreationForm(request.POST)
-        errors = []
 
+        context = {"status": 0}
         if form.is_valid():
             if self.verify_captcha(key, hashkey):
                 new_user = form.save()
                 user = auth.authenticate(username=username, password=password2)
                 auth.login(request, user)
             else:
-                errors.append("验证码错误")
+                context["status"] = -1
+                context["errors"] = []
+                context["errors"].append(u"验证码错误")
         else:
+            context["status"] = -1
+            context["errors"] = []
             for k, v in form.errors.items():
-                errors.append(v.as_text())
-        return HttpResponse(json.dumps({"errors": errors}), content_type="application/json")
+                context["errors"].append(v.as_text())
+        return HttpResponse(json.dumps(context), content_type="application/json")
 
     def logout(self, request):
-        if not request.user.is_authenticated():
-            raise PermissionDenied
-
         auth.logout(request)
-        return HttpResponse('OK')
+        return HttpResponse({"status": 0})
 
     def forgetPassword(self, request):
         key = request.POST.get("key")
         hashkey = request.POST.get("hashkey")
 
         form = PasswordForgetForm(request.POST)
-        errors = []
 
+        context = {"status": 0}
         if form.is_valid():
             if not self.verify_captcha(key, hashkey):
-                errors.append("验证码错误")
+                context["status"] = -1
+                context["errors"] = []
+                context["errors"].append(u"验证码错误")
             else:
-                opts = {
-                        'token_generator': default_token_generator,
+                opts = {'token_generator': default_token_generator,
                         'from_email': None,
-                        'request': request,
-                }
+                        'request': request}
                 user = form.save(**opts)
         else:
+            context["status"] = -1
+            context["errors"] = []
             for k, v in form.errors.items():
-                errors.append(v.as_text())
-        return HttpResponse(json.dumps({"errors": errors}), content_type="application/json")
+                context["errors"].append(v.as_text())
+        return HttpResponse(json.dumps(context), content_type="application/json")
 
     def changePassword(self, request):
         if not request.user.is_authenticated():
             raise PermissionDenied
 
         form = PasswordChangeForm(request.user, request.POST)
-        errors = []
 
+        context = {"status": 0}
         if form.is_valid():
             user = form.save()
             auth.logout(request)
         else:
+            context["status"] = -1
+            context["errors"] = []
             for k, v in form.errors.items():
-                errors.append(v.as_text())
-        return HttpResponse(json.dumps({"errors": errors}), content_type="application/json")
+                context["errors"].append(v.as_text())
+        return HttpResponse(json.dumps(context), content_type="application/json")
 
     def resetPassword(self, request):
         uidb64 = request.POST.get("uidb64")
@@ -147,17 +156,21 @@ class UserCenter(View):
 
         if user is not None and token_generator.check_token(user, token):
             form = SetPasswordForm(user, request.POST)
-            errors = []
 
+            context = {"status": 0}
             if form.is_valid():
                 user = form.save()
             else:
+                context["status"] = -1
+                context["errors"] = []
                 for k, v in form.errors.items():
-                    errors.append(v.as_text())
+                    context["errors"].append(v.as_text())
 
-            return HttpResponse(json.dumps({"errors": errors}), content_type="application/json")
+            return HttpResponse(json.dumps(context), content_type="application/json")
         else:
-            return HttpResponse("密码重置链接已失效，重设密码失败！", status=403)
+            context = {"status": -1}
+            context["errors"].append(u'密码重置链接已失效')
+            return HttpResponse(json.dumps(context), status=403)
 
 def refreshCaptcha(request):
     resp = dict()
