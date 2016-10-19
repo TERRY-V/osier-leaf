@@ -12,8 +12,8 @@ body {
 	font-stretch: normal;
 	font-size: 13px;
 	color: #333;
-	background: url("/static/images/background.jpg") repeat-x top center;
-	background-color: rgb(180, 218, 239);
+	background: url("/static/images/background/b2.jpg") repeat-x top center;
+	background-color: rgb(10, 56, 54);
 	text-decoration: none;
 }
 
