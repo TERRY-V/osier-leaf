@@ -19,7 +19,7 @@ class CrawlerShoppingTypeAdmin(admin.ModelAdmin):
 class CrawlerShoppingInfoAdmin(admin.ModelAdmin):
     fieldsets = [
             ('商品链接信息',       {'fields': ['srcid', 'website']}),
-            ('商品基本信息',       {'fields': ['name', 'srclink', 'shoppingtype', 'price', 'starttime', 'finishtime']})
+            ('商品基本信息',       {'fields': ['name', 'srclink', 'imglink', 'shoppingtype', 'price', 'starttime', 'finishtime']})
             ]
     list_display = ('id', 'srcid', 'name', 'shoppingtype', 'price', 'formatCreateTime')
     list_display_links = ('name',)

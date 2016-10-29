@@ -31,6 +31,7 @@ class CrawlerShoppingInfo(models.Model):
     website = models.CharField('商品来源', max_length=255, blank=True)
     srcid = models.CharField('商品编号', max_length=255, blank=True)
     srclink = models.CharField('商品URL', max_length=255, blank=True)
+    imglink = models.CharField('图片URL', max_length=255, blank=True)
     shoppingtype = models.ForeignKey(CrawlerShoppingType, verbose_name='商品分类', on_delete=models.CASCADE)
     name = models.CharField('商品名称', max_length=255, blank=True)
     price = models.FloatField('商品价格', blank=True)
