@@ -446,3 +446,41 @@ body {
 	border: none;
 }
 
+/* 商品 */
+.item {
+	float: left;
+	margin-top: 12px;
+	padding-bottom: 10px;
+	border: 1px solid #ededed;
+	transition: border-color .2s;
+}
+
+.row-1 {
+	margin-top: 11px;
+	height: 22px;
+	line-height: 22px;
+	overflow: hidden;
+	padding: 0 10px;
+}
+
+.price {
+	font-size: 18px;
+	zoom: 1;
+}
+
+.price span {
+	margin-right: 3px;
+	color: #F40;
+}
+
+.price strong {
+	color: #F40;
+	font-weight: 700;
+	font-family: verdana,arial;
+}
+
+.row-2 {
+	margin-top: 6px;
+	height: 36px;
+	padding: 0 10px;
+}
