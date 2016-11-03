@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Page Description -->
+        <title>{{ site_info.site_name }}管理后台</title>
+        <meta name="keywords" content="{{ site_info.site_keywords }}"/>
+        <meta name="description" content="{{ site_info.site_description }}"/>
+
+        <meta name="author" content="{{ site_info.site_author }}"/>
+        <meta name="copyright" content="{{ site_info.site_copyright }}"/>
+        
+        <link rel="shortcut icon" href="/static/images/favicon.ico">
+
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" href="/static/djadmin/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="/static/djadmin/dist/css/AdminLTE.min.css">
+
+        <!-- jQuery 2.2.3 -->
+        <script src="/static/djadmin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="/static/djadmin/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- jQuery cookie plugins -->
+        <script src="/static/jquery/jquery.cookie.js"></script>
+    </head>
+
+    <body class="hold-transition login-page" style="background: url(/static/images/background/b2.jpg) no-repeat center top; background-size: cover">
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="/djadmin/login"><b>{{ site_info.site_name }}管理后台</b></a>
+            </div>
+
+            <div class="login-box-body">
+                <div class="login-msg">
+                    <p>欢迎登录</p>
+                </div>
+                <form>
+                    {% csrf_token %}
+
+                    <div class="form-group has-feedback">
+                        <input type="text" id="login-username" class="form-control" placeholder="Username">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" id="login-password" class="form-control" placeholder="Password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <button type="submit" id="login-button" class="btn btn-primary btn-block btn-flat">登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function checkFields() {
+                return ($("#login-username").val() && $("#login-password").val());
+            }
+
+            $('#login-button').click(function() {
+                $(".alert").remove();
+
+                if(checkFields()) {
+                    $.ajax({
+                        type:"POST",
+                        url:"/djadmin/logincheck",
+                        data: {
+                            "username":$("#login-username").val(),
+                            "password":$("#login-password").val()
+                        },
+                        beforeSend:function(xhr) {
+                            xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+                        },
+                        success:function(data) {
+                            var status = data["status"];
+                            if(status == 0) {
+                                location.replace("/djadmin/main");
+                            } else {
+                                var html = "<div class=\"alert alert-danger\">"
+                                for (var key in data["errors"])
+                                    html += data["errors"][key]+"<br/>";
+                                html += "</div>";
+                                $(".login-msg").after(html);
+                            }
+                        },
+                        error:function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert(XMLHttpRequest.responseText);
+                        }
+                    });
+                } else {
+                    alert("字段不能为空！");
+                }
+                return false;
+            });
+        </script>
+    </body>
+</html>

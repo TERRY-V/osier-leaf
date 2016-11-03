@@ -1,0 +1,78 @@
+<!-- Main Header -->
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="/djadmin/main" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>{{ site_info.site_name }}管理后台</b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>{{ site_info.site_name }}管理后台</b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- view homepage -->
+                <li>
+                    <a href="/" target="_blank">
+                        <i class="glyphicon glyphicon-home" aria-hidden="true"></i>
+                        &nbsp;网站首页
+                    </a>
+                <li>
+                <!-- User Account Menu -->
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <img src="{{ user.img }}" class="user-image" alt="User Image">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">{{ user.username }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- The user image in the menu -->
+                        <li class="user-header">
+                            <img src="{{ user.img }}" class="img-circle" alt="User Image">
+                            <p>
+                                {{ user.username }}
+                                <small>上次登录:&nbsp;{{ user.last_login|date:"Y-m-d H:i:s" }}</small>
+                            </p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                            </div>
+                            <div class="pull-right">
+                                <a id="logout" href="javascript:;" class="btn btn-default btn-flat">退出</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<script>
+    $("#logout").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"/djadmin/logoutcheck",
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data){
+                location.replace("/djadmin/login"); 
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    });
+</script>

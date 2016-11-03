@@ -1,0 +1,24 @@
+{% extends "djadmin/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}<title>{{ site_info.site_name }}管理后台</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            欢迎使用
+            <small>{{ site_info.site_name }}</small>
+        </h1>
+    </section>
+
+    <section class="content">
+
+    </section>
+</div>
+
+{% endblock %}

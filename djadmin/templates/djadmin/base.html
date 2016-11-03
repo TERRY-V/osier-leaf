@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Page Description -->
+        {%block title %} {% endblock %}
+        {%block keywords %} {% endblock %}
+        {%block description %} {% endblock %}
+
+        <meta name="author" content="{{ site_info.site_author }}"/>
+        <meta name="copyright" content="{{ site_info.site_copyright }}"/>
+        
+        <link rel="shortcut icon" href="/static/images/favicon.ico">
+
+        <!-- Bootstrap 3.3.6 -->
+        <link rel="stylesheet" href="/static/djadmin/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="/static/djadmin/dist/css/AdminLTE.min.css">
+        <!-- AdminLTE Skins -->
+        <link rel="stylesheet" href="/static/djadmin/dist/css/skins/skin-blue.min.css">
+
+        <!-- jQuery 2.2.3 -->
+        <script src="/static/djadmin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <!-- Bootstrap 3.3.6 -->
+        <script src="/static/djadmin/bootstrap/js/bootstrap.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="/static/djadmin/dist/js/app.min.js"></script>
+        <!-- jQuery cookie plugins -->
+        <script src="/static/jquery/jquery.cookie.js"></script>
+    </head>
+    <!--
+    BODY TAG OPTIONS:
+    =================
+    Apply one or more of the following classes to get the
+    desired effect
+    |---------------------------------------------------------|
+    | SKINS         | skin-blue                               |
+    |               | skin-black                              |
+    |               | skin-purple                             |
+    |               | skin-yellow                             |
+    |               | skin-red                                |
+    |               | skin-green                              |
+    |---------------------------------------------------------|
+    |LAYOUT OPTIONS | fixed                                   |
+    |               | layout-boxed                            |
+    |               | layout-top-nav                          |
+    |               | sidebar-collapse                        |
+    |               | sidebar-mini                            |
+    |---------------------------------------------------------|
+    -->
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            {% include "djadmin/include/header.html" %}
+            {% include "djadmin/include/sidebar.html" %}
+            {% block main %} {% endblock %}
+            {% include "djadmin/include/footer.html" %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,85 @@
+{% extends "djadmin/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}<title>{{ site_info.site_name }}管理后台</title>{% endblock %}
+{% block keywords %}<meta name="keywords" content="{{ site_info.site_keywords }}"/>{% endblock %}
+{% block description %}<meta name="description" content="{{ site_info.site_description }}"/>{% endblock %}
+
+{% block main %}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            {{ site_info.site_name }}
+            <small>管理后台</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>&nbsp;首页</a></li>
+            <li><a href="#">系统管理</a></li>
+            <li class="active">用户管理</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        {% if messages %}
+            <div class="callout callout-info">
+                <h4>提示！</h4>
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">用户管理</h3>
+            </div>
+            <!-- /.box-alert -->
+            <div class="box-body">
+                <form role="form" action="/djadmin/user/add" method="post">
+                    {% csrf_token %}
+
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="username" placeholder="Enter ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="email" placeholder="Enter ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <input type="password" class="form-control" name="password1" placeholder="Enter ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <input type="password" class="form-control" name="password2" placeholder="Enter ...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">添加</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+    </section>
+</div>
+
+{% endblock %}
