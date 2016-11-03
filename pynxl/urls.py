@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^usercenter/', include('usercenter.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^djadmin/', include('djadmin.urls')),
 ]
 
