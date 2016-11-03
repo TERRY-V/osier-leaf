@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['liushaoer.com', 'www.liushaoer.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'djadmin',
     'homepage',
     'foodmaterial',
     'cookbook',
@@ -85,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pynxl.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -133,7 +133,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
