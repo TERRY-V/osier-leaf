@@ -21,18 +21,20 @@ from cookbook.models import CrawlerCookbookInfo
 from foodmaterial.models import CrawlerFoodMaterialInfo
 from movie.models import CrawlerMovieInfo
 from book.models import CrawlerBookInfo
+from shopping.models import CrawlerShoppingInfo
 
 def index(request):
     site_info = Website.objects.first()
     column_now = Column.objects.get(pk=3)
     column_list = Column.objects.order_by('column_order')
 
-    newest_cookbook_list = CrawlerCookbookInfo.objects.order_by('-createtime')[:9]
+    newest_cookbook_list = CrawlerCookbookInfo.objects.order_by('-createtime')[:8]
     support_cookbook_list = CrawlerCookbookInfo.objects.order_by('-supportnum')[:8]
     hottest_movie_list = CrawlerMovieInfo.objects.filter(id__lt=29719).order_by('-viewnum')[:8]
     support_movie_list = CrawlerMovieInfo.objects.filter(id__lt=29719).order_by('-supportnum')[:8]
     hottest_book_list = CrawlerBookInfo.objects.order_by('-viewnum')[:8]
     support_book_list = CrawlerBookInfo.objects.order_by('-supportnum')[:8]
+    hottest_shopping_list = CrawlerShoppingInfo.objects.order_by('-createtime')[:8]
 
     context = {'site_info': site_info, 
             'column_now': column_now,
@@ -42,7 +44,8 @@ def index(request):
             'hottest_movie_list': hottest_movie_list,
             'support_movie_list': support_movie_list,
             'hottest_book_list': hottest_book_list,
-            'support_book_list': support_book_list,}
+            'support_book_list': support_book_list,
+            'hottest_shopping_list': hottest_shopping_list,}
     return render(request, 'homepage/index.html', context)
 
 def introduce(request):
