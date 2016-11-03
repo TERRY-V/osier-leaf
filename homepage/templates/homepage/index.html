@@ -8,193 +8,230 @@
 
 {% block main %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-pynxl">
-                <div class="panel-body">
-                    <div class="page-header page-header-pynxl">
-                        <h4>
+<section class="content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-pynxl">
+                    <div class="panel-body">
+                        <div class="page-header page-header-pynxl">
+                            <h4>
+                                <i class="fa fa-cutlery" aria-hidden="true"></i>
+                                &nbsp;美食风云榜
+                                <small><a href="/cookbook/">更多&gt;</a></small>
+                            </h4>
+                        </div>
+                        <div>
+                            <div class="row">
+                                {% for cookbook in newest_cookbook_list %}
+                                    <div class="col-xs-6 col-md-3">
+                                        <div class="showimg">
+                                            <a href="/cookbook/{{ cookbook.srcid }}" target="_blank">
+                                                <img src="{{ cookbook.crawlercookbookimg_set.first.imglink }}" alt="{{ cookbook.name }}"
+                                                style="height: 220px;" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="caption">
+                                            <p class="text-center">
+                                                <a href="/cookbook/{{ cookbook.srcid }}">{{ cookbook.name|slice:"10" }}</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-pynxl">
+                    <div class="panel-body">
+                        <div class="page-header page-header-pynxl">
+                            <h4>
+                                <span class="glyphicon glyphicon-film"></span>
+                                &nbsp;电影风云榜
+                                <small><a href="/movie/">更多&gt;</a></small>
+                            </h4>
+                        </div>
+                        <div>
+                            <div class="row">
+                                {% for movie in hottest_movie_list %}
+                                    <div class="col-xs-6 col-md-3">
+                                        <div class="showimg">
+                                            <a href="/movie/{{ movie.srcid }}" target="_blank">
+                                                <img src="http://119.61.64.177/img001/{{ movie.crawlermovieimg_set.first.imgpath }}" alt="{{ movie.moviename }}" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="caption">
+                                            <p class="text-center">
+                                                <a href="/movie/{{ movie.srcid }}">{{ movie.moviename|slice:"10" }}</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-pynxl">
+                    <div class="panel-body">
+                        <div class="page-header page-header-pynxl">
+                            <h4>
+                                <span class="glyphicon glyphicon-book"></span>
+                                &nbsp;图书风云榜
+                                <small><a href="/book/">更多&gt;</a></small>
+                            </h4>
+                        </div>
+                        <div>
+                            <div class="row">
+                                {% for book in hottest_book_list %}
+                                    <div class="col-xs-6 col-md-3">
+                                        <div class="showimg">
+                                            <a href="/book/{{ book.srcid }}" target="_blank">
+                                                <img src="http://119.61.64.177/img001/{{ book.crawlerbookimg_set.first.imgpath }}" alt="{{ book.bookname }}" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="caption">
+                                            <p class="text-center">
+                                                <a href="/book/{{ book.srcid }}">{{ book.bookname|slice:"10" }}</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-pynxl">
+                    <div class="panel-body">
+                        <div class="page-header page-header-pynxl">
+                            <h4>
+                                <span class="glyphicon glyphicon-book"></span>
+                                &nbsp;商城风云榜
+                                <small><a href="/shopping/">更多&gt;</a></small>
+                            </h4>
+                        </div>
+                        <div>
+                            <div class="row">
+                                {% for shopping in hottest_shopping_list %}
+                                    <div class="col-xs-6 col-md-3">
+                                        <div class="showimg">
+                                            <a href="{{ shopping.srclink }}" target="_blank">
+                                                <img src="{{ shopping.imglink }}" alt="{{ shopping.name }}" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="info">
+                                            <div class="row-1">
+                                                <div class="price">
+                                                    <span>¥</span>
+                                                    <strong>{{ shopping.price|floatformat:2 }}</strong>
+                                                </div>
+                                            </div>
+                                            <div class="row-2">
+                                                <div class="title">
+                                                    <a href="{{ shopping.srclink }}" target="_blank">{{ shopping.name|slice:"20" }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default panel-intro-pynxl">
+                    <div class="panel-heading heading">
+                        <h5>
+                            <i class="fa fa-leaf" aria-hidden="true"></i>
+                            <strong>柳梢儿(Liushaoer.com)</strong>
+                        </h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="intro">
+                                <p>
+                                    <i class="fa fa-quote-left fa-3x fa-pull-left fa-border" aria-hidden="true"></i>
+                                    {{ site_info.site_description }}
+                                </p>
+                        </div>
+                        <div class="button-group">
+                            <a class="btn btn-success" href="/usercenter/login">登录</a>
+                            &nbsp;
+                            <a class="btn btn-success" href="/usercenter/register">注册</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-pynxl">
+                    <div class="panel-heading panel-heading-pynxl">
+                        <h5>
                             <i class="fa fa-cutlery" aria-hidden="true"></i>
-                            &nbsp;美食风云榜
-                            <small><a href="/cookbook/">更多&gt;</a></small>
-                        </h4>
+                            <strong>热门美食</strong>
+                        </h5>
                     </div>
-                    <div>
-                        <div class="row">
-                            {% for cookbook in newest_cookbook_list %}
-                                <div class="col-xs-6 col-md-4">
-                                    <div class="showimg">
-                                        <a href="/cookbook/{{ cookbook.srcid }}" target="_blank">
-                                            <img src="{{ cookbook.crawlercookbookimg_set.first.imglink }}" alt="{{ cookbook.name }}"
-                                            style="height: 115px; width: 140px" class="img-rounded">
-                                        </a>
-                                    </div>
-                                    <div class="caption">
-                                        <p class="text-center">
-                                            <a href="/cookbook/{{ cookbook.srcid }}">{{ cookbook.name|slice:"8" }}</a>
-                                        </p>
-                                    </div>
-                                </div>
+                    <ul class="list-group" id="support-you-like">
+                        {% if support_cookbook_list %}
+                            {% for support in support_cookbook_list %}
+                                <li class="list-group-item">
+                                    <span class="badge pull-left">
+                                        {{ support.viewnum }}
+                                    </span>
+                                    &nbsp;
+                                    <a href="/cookbook/{{ support.srcid }}">{{ support.name }}</a>
+                                </li>
                             {% endfor %}
-                        </div>
-                    </div>
+                        {% endif %}
+                    </ul>
                 </div>
-            </div>
-            <div class="panel panel-pynxl">
-                <div class="panel-body">
-                    <div class="page-header page-header-pynxl">
-                        <h4>
+                <div class="panel panel-pynxl">
+                    <div class="panel-heading panel-heading-pynxl">
+                        <h5>
                             <span class="glyphicon glyphicon-film"></span>
-                            &nbsp;电影风云榜
-                            <small><a href="/movie/">更多&gt;</a></small>
-                        </h4>
+                            <strong>热门电影</strong>
+                        </h5>
                     </div>
-                    <div>
-                        <div class="row">
-                            {% for movie in hottest_movie_list %}
-                                <div class="col-xs-6 col-md-3">
-                                    <div class="showimg">
-                                        <a href="/movie/{{ movie.srcid }}" target="_blank">
-                                            <img src="http://119.61.64.177/img001/{{ movie.crawlermovieimg_set.first.imgpath }}" alt="{{ movie.moviename }}"
-                                            style="height: 190px; width: 125px" class="img-rounded">
-                                        </a>
-                                    </div>
-                                    <div class="caption">
-                                        <p class="text-center">
-                                            <a href="/movie/{{ movie.srcid }}">{{ movie.moviename|slice:"8" }}</a>
-                                        </p>
-                                    </div>
-                                </div>
+                    <ul class="list-group" id="support-you-like">
+                        {% if support_movie_list %}
+                            {% for support in support_movie_list %}
+                                <li class="list-group-item">
+                                    <span class="badge pull-left">
+                                        {{ support.viewnum }}
+                                    </span>
+                                    &nbsp;
+                                    <a href="/movie/{{ support.srcid }}">{{ support.moviename }}</a>
+                                    <span class="pull-right" style="color: red">
+                                        {{ support.score }}
+                                    </span>
+                                </li>
                             {% endfor %}
-                        </div>
-                    </div>
+                        {% endif %}
+                    </ul>
                 </div>
-            </div>
-            <div class="panel panel-pynxl">
-                <div class="panel-body">
-                    <div class="page-header page-header-pynxl">
-                        <h4>
+                <div class="panel panel-pynxl">
+                    <div class="panel-heading panel-heading-pynxl">
+                        <h5>
                             <span class="glyphicon glyphicon-book"></span>
-                            &nbsp;图书风云榜
-                            <small><a href="/book/">更多&gt;</a></small>
-                        </h4>
+                            <strong>热门图书</strong>
+                        </h5>
                     </div>
-                    <div>
-                        <div class="row">
-                            {% for book in hottest_book_list %}
-                                <div class="col-xs-6 col-md-3">
-                                    <div class="showimg">
-                                        <a href="/book/{{ book.srcid }}" target="_blank">
-                                            <img src="http://119.61.64.177/img001/{{ book.crawlerbookimg_set.first.imgpath }}" alt="{{ book.bookname }}"
-                                            style="height: 190px; width: 125px" class="img-rounded">
-                                        </a>
-                                    </div>
-                                    <div class="caption">
-                                        <p class="text-center">
-                                            <a href="/book/{{ book.srcid }}">{{ book.bookname|slice:"8" }}</a>
-                                        </p>
-                                    </div>
-                                </div>
+                    <ul class="list-group" id="hottest-you-like">
+                        {% if support_book_list %}
+                            {% for support in support_book_list %}
+                                <li class="list-group-item">
+                                    <span class="badge pull-left">
+                                        {{ support.viewnum }}
+                                    </span>
+                                    &nbsp;
+                                    <a href="/book/{{ support.srcid }}">{{ support.bookname }}</a>
+                                    <span class="pull-right" style="color: red">
+                                        {{ support.score }}
+                                    </span>
+                                </li>
                             {% endfor %}
-                        </div>
-                    </div>
+                        {% endif %}
+                    </ul>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default panel-intro-pynxl">
-                <div class="panel-heading heading">
-                    <h5>
-                        <i class="fa fa-leaf" aria-hidden="true"></i>
-                        <strong>柳梢儿(Liushaoer.com)</strong>
-                    </h5>
-                </div>
-                <div class="panel-body">
-                    <div class="intro">
-                            <p>
-                                <i class="fa fa-quote-left fa-3x fa-pull-left fa-border" aria-hidden="true"></i>
-                                {{ site_info.site_description }}
-                            </p>
-                    </div>
-                    <div class="button-group">
-                        <a class="btn btn-success" href="/usercenter/login">登录</a>
-                        &nbsp;
-                        <a class="btn btn-success" href="/usercenter/register">注册</a>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-pynxl">
-                <div class="panel-heading panel-heading-pynxl">
-                    <h5>
-                        <i class="fa fa-cutlery" aria-hidden="true"></i>
-                        <strong>热门美食</strong>
-                    </h5>
-                </div>
-                <ul class="list-group" id="support-you-like">
-                    {% if support_cookbook_list %}
-                        {% for support in support_cookbook_list %}
-                            <li class="list-group-item">
-                                <span class="badge pull-left">
-                                    {{ support.viewnum }}
-                                </span>
-                                &nbsp;
-                                <a href="/cookbook/{{ support.srcid }}">{{ support.name }}</a>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-            <div class="panel panel-pynxl">
-                <div class="panel-heading panel-heading-pynxl">
-                    <h5>
-                        <span class="glyphicon glyphicon-film"></span>
-                        <strong>热门电影</strong>
-                    </h5>
-                </div>
-                <ul class="list-group" id="support-you-like">
-                    {% if support_movie_list %}
-                        {% for support in support_movie_list %}
-                            <li class="list-group-item">
-                                <span class="badge pull-left">
-                                    {{ support.viewnum }}
-                                </span>
-                                &nbsp;
-                                <a href="/movie/{{ support.srcid }}">{{ support.moviename }}</a>
-                                <span class="pull-right" style="color: red">
-                                    {{ support.score }}
-                                </span>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-            <div class="panel panel-pynxl">
-                <div class="panel-heading panel-heading-pynxl">
-                    <h5>
-                        <span class="glyphicon glyphicon-book"></span>
-                        <strong>热门图书</strong>
-                    </h5>
-                </div>
-                <ul class="list-group" id="hottest-you-like">
-                    {% if support_book_list %}
-                        {% for support in support_book_list %}
-                            <li class="list-group-item">
-                                <span class="badge pull-left">
-                                    {{ support.viewnum }}
-                                </span>
-                                &nbsp;
-                                <a href="/book/{{ support.srcid }}">{{ support.bookname }}</a>
-                                <span class="pull-right" style="color: red">
-                                    {{ support.score }}
-                                </span>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 {% endblock %}
