@@ -19,9 +19,8 @@
                                 {{ column_now.column_name }}
                             </h4>
                         </li>
-                        <li role="presentation" {% ifequal sort 3 %}class="active"{% endifequal %}><a href="/shopping/search?q={{ query }}&sort=3">推荐</a></li>
-                        <li role="presentation" {% ifequal sort 2 %}class="active"{% endifequal %}><a href="/shopping/search?q={{ query }}&sort=2">热门</a></li>
-                        <li role="presentation" {% ifequal sort 1 %}class="active"{% endifequal %}><a href="/shopping/search?q={{ query }}&sort=1">最新</a></li>
+                        <li role="presentation" {% ifequal sort 2 %}class="active"{% endifequal %}><a href="/shopping/search?q={{ query }}&sort=2">价格降序</a></li>
+                        <li role="presentation" {% ifequal sort 1 %}class="active"{% endifequal %}><a href="/shopping/search?q={{ query }}&sort=1">最新上架</a></li>
                     </ul>
                 </div>
 
@@ -40,7 +39,7 @@
                                             <div class="row-1">
                                                 <div class="price">
                                                     <span>¥</span>
-                                                    <strong>{{ shopping.price }}</strong>
+                                                    <strong>{{ shopping.price|floatformat:2 }}</strong>
                                                 </div>
                                             </div>
                                             <div class="row-2">
@@ -59,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="text-right">
+            <div class="text-center">
                 <ul class="pagination">
                     <li>
                         {% if shopping_list.has_previous %}

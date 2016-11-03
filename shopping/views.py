@@ -36,9 +36,7 @@ def search(request):
     if sort == '1':
     	shopping_list = shopping_list.order_by('-createtime')[:1000]
     elif sort == '2':
-    	shopping_list = shopping_list.order_by('-viewnum')[:1000]
-    elif sort == '3':
-    	shopping_list = shopping_list.order_by('-supportnum')[:1000]
+    	shopping_list = shopping_list.order_by('-price')[:1000]
     else:
         sort = '1'
     	shopping_list = shopping_list.order_by('-createtime')[:1000]
