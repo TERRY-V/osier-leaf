@@ -17,10 +17,17 @@ body {
 	text-decoration: none;
 }
 
+/*
 @media (min-width: 1200px) {
 	.container {
 		width: 970px;
 	}
+}
+*/
+
+.container {
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 /* 导航栏 */
