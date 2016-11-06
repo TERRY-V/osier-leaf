@@ -113,21 +113,23 @@
                             <div class="row">
                                 {% for shopping in hottest_shopping_list %}
                                     <div class="col-xs-6 col-md-3">
-                                        <div class="showimg">
-                                            <a href="{{ shopping.srclink }}" target="_blank">
-                                                <img src="{{ shopping.imglink }}" alt="{{ shopping.name }}" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <div class="row-1">
-                                                <div class="price">
-                                                    <span>¥</span>
-                                                    <strong>{{ shopping.price|floatformat:2 }}</strong>
-                                                </div>
+                                        <div class="shopping-item">
+                                            <div class="showimg">
+                                                <a href="{{ shopping.srclink }}" target="_blank">
+                                                    <img src="{{ shopping.imglink }}" alt="{{ shopping.name }}" class="img-responsive">
+                                                </a>
                                             </div>
-                                            <div class="row-2">
-                                                <div class="title">
-                                                    <a href="{{ shopping.srclink }}" target="_blank">{{ shopping.name|slice:"20" }}</a>
+                                            <div class="info">
+                                                <div class="row-1">
+                                                    <div class="price">
+                                                        <span>¥</span>
+                                                        <strong>{{ shopping.price|floatformat:2 }}</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row-2">
+                                                    <div class="title">
+                                                        <a href="{{ shopping.srclink }}" target="_blank">{{ shopping.name|slice:"20" }}</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

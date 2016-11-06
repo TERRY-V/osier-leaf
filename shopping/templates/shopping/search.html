@@ -29,7 +29,7 @@
                         <div class="row">
                             {% for shopping in shopping_list %}
                                 <div class="col-xs-6 col-md-3">
-                                    <div class="item">
+                                    <div class="shopping-item">
                                         <div class="showimg">
                                             <a href="{{ shopping.srclink }}" target="_blank">
                                                 <img src="{{ shopping.imglink }}" alt="{{ shopping.name }}" class="img-responsive">
@@ -44,7 +44,7 @@
                                             </div>
                                             <div class="row-2">
                                                 <div class="title">
-                                                    <a href="{{ shopping.srclink }}" target="_blank">{{ shopping.name|slice:"27" }}</a>
+                                                    <a href="{{ shopping.srclink }}" target="_blank">{{ shopping.name|slice:"24" }}</a>
                                                 </div>
                                             </div>
                                         </div>
