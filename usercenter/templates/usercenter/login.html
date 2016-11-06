@@ -10,81 +10,82 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-5 col-sm-offset-3 form-box">
-            <div class="form-top">
-                <div class="form-top-left">
-                    <h3>登陆</h3>
+        <div class="col-sm-4 col-sm-offset-4 form-box">
+            <div class="login-form" style="display: none">
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>登陆</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="form-bottom">
-                <form role="form" method="post" class="login-form">
-                    {% csrf_token %}
+                <div class="form-bottom">
+                    <form id="login-form">
+                        {% csrf_token %}
 
-                    <div class="form-group">
-                        <label class="sr-only" for="form-username">用户名</label>
-                        <input type="text" name="form-username" placeholder="用户名..." class="form-input form-control" id="login-username">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="sr-only" for="form-password">密码</label>
-                        <input type="password" name="form-password" placeholder="密码..." class="form-input form-control" id="login-password">
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <label class="sr-only" for="form-captcha">验证码</label>
-                            <input type="text" id="captcha_1" name="captcha_1" class="form-input form-control" placeholder="验证码...">
+                        <div class="form-group">
+                            <label class="sr-only" for="form-username">用户名</label>
+                            <input type="text" name="username" placeholder="用户名..." class="form-input form-control" id="username">
                         </div>
 
-                        <div class="col-sm-2">
-                            <span>
-                                <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
-                                    <img src="#" alt="captcha" class="captcha" style="margin-top: 5px; width: 85px; height: 30px">
-                                </a>
-                            </span>
-                            <input id="captcha_0" name="captcha_0" type="hidden" value="#">
+                        <div class="form-group">
+                            <label class="sr-only" for="form-password">密码</label>
+                            <input type="password" name="password" placeholder="密码..." class="form-input form-control" id="password">
                         </div>
-                    </div>
 
-                    <button type="submit" id="login-button" class="btn btn-pynxl">登陆</button>
-                </form>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="sr-only" for="form-captcha">验证码</label>
+                                <input type="text" id="captcha_key" name="captcha_key" class="form-input form-control" placeholder="验证码...">
+                            </div>
+
+                            <div class="col-sm-2">
+                                <span>
+                                    <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
+                                        <img src="#" alt="验证码" class="captcha-img" style="margin-top: 5px; width: 85px; height: 30px">
+                                    </a>
+                                </span>
+                                <input id="captcha_hashkey" name="captcha_hashkey" type="hidden" value="#">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="login-button" class="btn btn-pynxl">登陆</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    $('div.login-form').slideDown(1000, function() {
+    });
+
     $('#login-button').click(function(){
         $(".form-box .alert").remove();
 
-        $.ajax({
-            type:"POST",
-            url:"/usercenter/logincheck",
-            data: {
-                "username":$("#login-username").val(),
-                "password":$("#login-password").val(),
-                "key":$("#captcha_1").val(),
-                "hashkey":$("#captcha_0").val()
-            },
-            beforeSend:function(xhr){
-                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
-            },
-            success:function(data){
-                var status = data["status"];
-                if(status == 0) {
-                    location.replace("/");
-                } else {
-                    var html = "<div class=\"alert alert-danger\">"
-                    for (var key in data["errors"])
-                        html += data["errors"][key]+"<br/>";
-                    html += "</div>";
-                    $(".form-top").after(html);
+        function checkFields() {
+            return ($("#username").val() && $("#password").val() && $("#captcha_key").val());
+        }
+
+        if(checkFields()) {
+            $.post(
+                "/usercenter/logincheck", $("#login-form").serialize(),
+                function(data){
+                    var status = data["status"];
+                    if(status == 0) {
+                        location.replace("/");
+                    } else {
+                        var html = "<div class=\"alert alert-danger\">"
+                        for (var key in data["errors"])
+                            html += data["errors"][key]+"<br/>";
+                        html += "</div>";
+                        $(".form-top").after(html);
+                    }
                 }
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.responseText);
-            }
-        });
+            );
+        } else {
+            alert("字段不能为空!");
+        }
+
         return false;
     });
 
@@ -94,8 +95,8 @@
             var captcha_key = json['captcha_key'];
             var captcha_hashkey = json['captcha_hashkey'];
 
-            $("#captcha_0").attr("value", captcha_key);
-            $(".captcha").attr("src", captcha_hashkey);
+            $("#captcha_hashkey").attr("value", captcha_key);
+            $(".captcha-img").attr("src", captcha_hashkey);
         });
     }
 

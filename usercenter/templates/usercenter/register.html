@@ -10,79 +10,71 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-5 col-sm-offset-3 form-box">
-            <div class="form-top">
-                <div class="form-top-left">
-                    <h3>注册</h3>
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="register-form form-box" style="display: none">
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>注册</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="form-bottom">
-                <form role="form" method="post" class="register-form">
-                    {% csrf_token %}
+                <div class="form-bottom">
+                    <form role="form" id="register-form">
+                        {% csrf_token %}
 
-                    <div class="form-group">
-                        <label class="sr-only" for="form-username">用户名</label>
-                        <input type="text" name="form-username" placeholder="用户名..." class="form-input form-control" id="register-username">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="sr-only" for="form-email">注册邮箱</label>
-                        <input type="text" name="form-email" placeholder="注册邮箱..." class="form-input form-control" id="register-email">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="sr-only" for="form-password-1">密码</label>
-                        <input type="password" name="form-password-1" placeholder="密码..." class="form-input form-control" id="register-password-1">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="sr-only" for="form-password-2">确认密码</label>
-                        <input type="password" name="form-password-2" placeholder="确认密码..." class="form-input form-control" id="register-password-2">
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <label class="sr-only" for="form-captcha">验证码</label>
-                            <input type="text" id="captcha_1" name="captcha_1" class="form-input form-control" placeholder="验证码...">
+                        <div class="form-group">
+                            <label class="sr-only" for="form-username">用户名</label>
+                            <input type="text" name="username" placeholder="用户名..." class="form-input form-control" id="username">
                         </div>
 
-                        <div class="col-sm-2">
-                            <span>
-                                <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
-                                    <img src="#" alt="captcha" class="captcha" style="margin-top: 5px; width: 85px; height: 30px">
-                                </a>
-                            </span>
-                            <input id="captcha_0" name="captcha_0" type="hidden" value="#">
+                        <div class="form-group">
+                            <label class="sr-only" for="form-email">注册邮箱</label>
+                            <input type="text" name="email" placeholder="注册邮箱..." class="form-input form-control" id="email">
                         </div>
-                    </div>
 
-                    <button type="submit" id="register-button" class="btn btn-pynxl">注册</button>
-                </form>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-password-1">密码</label>
+                            <input type="password" name="password1" placeholder="密码..." class="form-input form-control" id="password1">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="form-password-2">确认密码</label>
+                            <input type="password" name="password2" placeholder="确认密码..." class="form-input form-control" id="password2">
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="sr-only" for="form-captcha">验证码</label>
+                                <input type="text" id="captcha_key" name="captcha_key" class="form-input form-control" placeholder="验证码...">
+                            </div>
+
+                            <div class="col-sm-2">
+                                <span>
+                                    <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
+                                        <img src="#" alt="验证码" class="captcha-img" style="margin-top: 5px; width: 85px; height: 30px">
+                                    </a>
+                                </span>
+                                <input id="captcha_hashkey" name="captcha_hashkey" type="hidden" value="#">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="register-button" class="btn btn-pynxl">注册</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    $('div.register-form').slideDown(1000, function() {
+    });
+
     $('#register-button').click(function(){
         $(".form-box .alert").remove();
 
-        $.ajax({
-            type:"POST",
-            url:"/usercenter/registercheck",
-            data:{
-                "username":$("#register-username").val(),
-                "email":$("#register-email").val(),
-                "password1":$("#register-password-1").val(),
-                "password2":$("#register-password-2").val(),
-                "key":$("#captcha_1").val(),
-                "hashkey":$("#captcha_0").val()
-            },
-            dataType:'json',
-            beforeSend:function(xhr){
-                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
-            },
-            success:function(data){
+        $.post(
+            "/usercenter/registercheck", $("#register-form").serialize(),
+            function(data){
                 var status = data["status"];
                 if(status == 0) {
                     location.replace("/");
@@ -93,11 +85,9 @@
                     html += "</div>";
                     $(".form-top").after(html);
                 }
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest.responseText);
             }
-        });
+        );
+
         return false;
     });
 
@@ -107,8 +97,8 @@
             var captcha_key = json['captcha_key'];
             var captcha_hashkey = json['captcha_hashkey'];
 
-            $("#captcha_0").attr("value", captcha_key);
-            $(".captcha").attr("src", captcha_hashkey);
+            $("#captcha_hashkey").attr("value", captcha_key);
+            $(".captcha-img").attr("src", captcha_hashkey);
         });
     }
 
