@@ -119,7 +119,7 @@ class PasswordForgetForm(forms.Form):
             'required': 'Email不能为空'}
     )
 
-    key = forms.RegexField(
+    captcha_key = forms.RegexField(
         regex = r'^.*$',
         error_messages = {
             'required': '验证码不能为空'}
