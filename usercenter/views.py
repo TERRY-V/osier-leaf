@@ -53,8 +53,8 @@ class UserCenter(View):
     def login(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        key = request.POST.get("key")
-        hashkey = request.POST.get("hashkey")
+        key = request.POST.get("captcha_key")
+        hashkey = request.POST.get("captcha_hashkey")
 
         context = {"status": 0}
         if self.verify_captcha(key, hashkey):
@@ -74,8 +74,8 @@ class UserCenter(View):
     def register(self, request):
         username = request.POST.get("username")
         password2 = request.POST.get("password2")
-        key = request.POST.get("key")
-        hashkey = request.POST.get("hashkey")
+        key = request.POST.get("captcha_key")
+        hashkey = request.POST.get("captcha_hashkey")
 
         form = UserCreationForm(request.POST)
 
@@ -101,8 +101,8 @@ class UserCenter(View):
         return HttpResponse({"status": 0})
 
     def forgetPassword(self, request):
-        key = request.POST.get("key")
-        hashkey = request.POST.get("hashkey")
+        key = request.POST.get("captcha_key")
+        hashkey = request.POST.get("captcha_hashkey")
 
         form = PasswordForgetForm(request.POST)
 
