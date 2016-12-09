@@ -11,8 +11,8 @@
         <div class="col-md-12 column">
             <div class="article-list panel panel-pynxl">
                 <div class="panel-heading">
-                    <ul class="nav nav-tabs nav-pynxl">
-                        <li role="presentation" style="float: left;">
+                    <ul class="nav nav-tabs nav-tabs-pynxl">
+                        <li role="presentation">
                             <h4>
                                 <span class="{{ column_now.column_icon }}"></span>
                                 &nbsp;
@@ -28,8 +28,8 @@
                     {% if shopping_list %}
                         <div class="row">
                             {% for shopping in shopping_list %}
-                                <div class="col-xs-6 col-md-3">
-                                    <div class="shopping-item">
+                                <div class="col-xs-6 col-md-5ths">
+                                    <div class="item-pynxl">
                                         <div class="showimg">
                                             <a href="{{ shopping.srclink }}" target="_blank">
                                                 <img src="{{ shopping.imglink }}" alt="{{ shopping.name }}" class="img-responsive">

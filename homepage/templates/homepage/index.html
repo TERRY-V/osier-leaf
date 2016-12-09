@@ -11,7 +11,7 @@
 <section class="content-section">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="panel panel-pynxl">
                     <div class="panel-body">
                         <div class="page-header page-header-pynxl">
@@ -25,16 +25,42 @@
                             <div class="row">
                                 {% for cookbook in newest_cookbook_list %}
                                     <div class="col-xs-6 col-md-3">
-                                        <div class="showimg">
-                                            <a href="/cookbook/{{ cookbook.srcid }}" target="_blank">
-                                                <img src="{{ cookbook.crawlercookbookimg_set.first.imglink }}" alt="{{ cookbook.name }}"
-                                                style="height: 220px;" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <p class="text-center">
-                                                <a href="/cookbook/{{ cookbook.srcid }}">{{ cookbook.name|slice:"10" }}</a>
-                                            </p>
+                                        <div class="item-pynxl">
+                                            <div class="showimg hovereffect">
+                                                <a href="/cookbook/{{ cookbook.srcid }}" target="_blank">
+                                                    <img src="{{ cookbook.crawlercookbookimg_set.first.imglink }}" alt="{{ cookbook.name }}" class="img-responsive">
+                                                </a>
+                                                <div class="overlay">
+                                                    <div class="info">
+                                                        <a href="/cookbook/{{ cookbook.srcid }}">{{ cookbook.name|slice:"9" }}</a>
+                                                    </div>
+                                                    <div class="labels">
+                                                        {% for label in cookbook.labels_as_list %}
+                                                            <span class="label label-pynxl-{{ forloop.counter|mod_lookup:6 }}">{{ label }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="row-2">
+                                                    <div class="title">
+                                                        <a href="/cookbook/{{ cookbook.srcid }}">{{ cookbook.name|slice:"9" }}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row-3">
+                                                    <time>{{ cookbook.get_time_string }}</time>
+                                                    <div class="item-meta">
+                                                        <span>
+                                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                            {{ cookbook.supportnum }}
+                                                        </span>
+                                                        <span>
+                                                            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                                            {{ cookbook.crawlercookbookcomment_set.count }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -55,15 +81,38 @@
                             <div class="row">
                                 {% for movie in hottest_movie_list %}
                                     <div class="col-xs-6 col-md-3">
-                                        <div class="showimg">
-                                            <a href="/movie/{{ movie.srcid }}" target="_blank">
-                                                <img src="http://119.61.64.177/img001/{{ movie.crawlermovieimg_set.first.imgpath }}" alt="{{ movie.moviename }}" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <p class="text-center">
-                                                <a href="/movie/{{ movie.srcid }}">{{ movie.moviename|slice:"10" }}</a>
-                                            </p>
+                                        <div class="item-pynxl">
+                                            <div class="showimg hovereffect">
+                                                <a href="/movie/{{ movie.srcid }}" target="_blank">
+                                                    <img src="http://119.61.64.177/img001/{{ movie.crawlermovieimg_set.first.imgpath }}" alt="{{ movie.moviename }}" class="img-responsive">
+                                                </a>
+                                                <div class="overlay">
+                                                    <div class="info">
+                                                        <a href="/movie/{{ movie.srcid }}">{{ movie.moviename|slice:"9" }}</a>
+                                                        <span><strong>{{ movie.score }}</strong></span>
+                                                    </div>
+                                                    <div class="labels">
+                                                        {% for label in movie.labels_as_list %}
+                                                            <span class="label label-pynxl-{{ forloop.counter|mod_lookup:6 }}">{{ label }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="row-2">
+                                                    <div class="title">
+                                                        <a href="/movie/{{ movie.srcid }}">{{ movie.moviename|slice:"10" }}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row-3">
+                                                    <time>{{ movie.viewnum }}次播放</time>
+                                                    <div class="item-meta">
+                                                        <span>
+                                                            {{ movie.crawlermoviecomment_set.count }}次评论
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -84,15 +133,33 @@
                             <div class="row">
                                 {% for book in hottest_book_list %}
                                     <div class="col-xs-6 col-md-3">
-                                        <div class="showimg">
-                                            <a href="/book/{{ book.srcid }}" target="_blank">
-                                                <img src="http://119.61.64.177/img001/{{ book.crawlerbookimg_set.first.imgpath }}" alt="{{ book.bookname }}" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <p class="text-center">
-                                                <a href="/book/{{ book.srcid }}">{{ book.bookname|slice:"10" }}</a>
-                                            </p>
+                                        <div class="item-pynxl">
+                                            <div class="showimg hovereffect">
+                                                <a href="/book/{{ book.srcid }}" target="_blank">
+                                                    <img src="http://119.61.64.177/img001/{{ book.crawlerbookimg_set.first.imgpath }}" alt="{{ book.bookname }}" class="img-responsive">
+                                                </a>
+                                                <div class="overlay">
+                                                    <div class="info">
+                                                        <a href="/book/{{ movie.srcid }}">{{ book.bookname|slice:"9" }}</a>
+                                                        <span><strong>{{ book.score }}</strong></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="row-2">
+                                                    <div class="title">
+                                                        <a href="/book/{{ book.srcid }}">{{ book.bookname|slice:"10" }}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row-3">
+                                                    <time>{{ book.viewnum }}次浏览</time>
+                                                    <div class="item-meta">
+                                                        <span>
+                                                            {{ book.score }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -113,11 +180,17 @@
                             <div class="row">
                                 {% for shopping in hottest_shopping_list %}
                                     <div class="col-xs-6 col-md-3">
-                                        <div class="shopping-item">
-                                            <div class="showimg">
+                                        <div class="item-pynxl">
+                                            <div class="showimg hovereffect">
                                                 <a href="{{ shopping.srclink }}" target="_blank">
                                                     <img src="{{ shopping.imglink }}" alt="{{ shopping.name }}" class="img-responsive">
                                                 </a>
+                                                <div class="overlay">
+                                                    <div class="info">
+                                                        <a href="/shopping/{{ shopping.srcid }}">{{ shopping.name|slice:"9" }}</a>
+                                                        <span><strong>{{ shopping.price }}</strong></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="info">
                                                 <div class="row-1">
@@ -131,6 +204,13 @@
                                                         <a href="{{ shopping.srclink }}" target="_blank">{{ shopping.name|slice:"20" }}</a>
                                                     </div>
                                                 </div>
+                                                <div class="row-3">
+                                                    <div class="item-meta">
+                                                        <span>
+                                                            {{ shopping.website }}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -140,9 +220,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="panel panel-default panel-intro-pynxl">
-                    <div class="panel-heading heading">
+                    <div class="panel-heading heading text-center">
                         <h5>
                             <i class="fa fa-leaf" aria-hidden="true"></i>
                             <strong>柳梢儿(Liushaoer.com)</strong>
@@ -155,7 +235,7 @@
                                     {{ site_info.site_description }}
                                 </p>
                         </div>
-                        <div class="button-group">
+                        <div class="button-group text-center">
                             <a class="btn btn-success" href="/usercenter/login">登录</a>
                             &nbsp;
                             <a class="btn btn-success" href="/usercenter/register">注册</a>
@@ -235,5 +315,15 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function(){
+        $("div.item-pynxl").fadeIn(1000)
+            .css({
+            'transform': 'rotate(360deg)',
+            'transition': 'all 0.3s linear'
+        });
+    });
+</script>
 
 {% endblock %}

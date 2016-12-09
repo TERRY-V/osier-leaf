@@ -138,19 +138,19 @@
                 <div>
                     <h6 class="heading text-center">
                         <button id="support-button" class="btn btn-default" type="submit">
-                            <span id="span-support-id" class="glyphicon glyphicon-thumbs-up">
+                            <span id="span-support-id" class="fa fa-thumbs-o-up">
                                 推荐({{ cookbook.supportnum }})
                             </span>
                         </button>
                         &nbsp;
                         <button id="against-button" class="btn btn-default" type="submit"">
-                            <span id="span-against-id" class="glyphicon glyphicon-thumbs-down">
+                            <span id="span-against-id" class="fa fa-thumbs-o-down">
                                 反对({{ cookbook.againstnum }})
                             </span>
                         </button>
                     </h6>
                 </div>
-            </div>
+            </div>            
 
             <br/>
 
@@ -308,7 +308,7 @@
                 if(status==0) {
                     var supportnum = data["supportnum"];
                     var againstnum = data["againstnum"];
-                    var html = "<span id=\"span-support-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;推荐(";
+                    var html = "<span id=\"span-support-id\" class=\"fa fa-thumbs-o-up\">&nbsp;推荐(";
                     html += supportnum;
                     html += ")</span>";
                     $("#span-support-id").replaceWith(html);
@@ -336,7 +336,7 @@
                 if(status==0) {
                     var supportnum = data["supportnum"];
                     var againstnum = data["againstnum"];
-                    var html = "<span id=\"span-against-id\" class=\"glyphicon glyphicon-thumbs-up\">&nbsp;反对(";
+                    var html = "<span id=\"span-against-id\" class=\"fa fa-thumbs-o-down\">&nbsp;反对(";
                     html += againstnum;
                     html += ")</span>";
                     $("#span-against-id").replaceWith(html);
@@ -386,7 +386,7 @@
                 var status = data["status"];
                 if(status==0) {
                     var supportnum = data["supportnum"];
-                    var html = "<span class=\"glyphicon glyphicon-thumbs-up\"></span> (";
+                    var html = "<span class=\"fa fa-thumbs-o-up\"></span> (";
                     html += supportnum;
                     html += ")";
                     this_obj.html(html);
