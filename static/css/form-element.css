@@ -1,72 +1,149 @@
-.form-input {
-	height: 36px;
-	margin: 0;
-	padding: 0 20px;
-	vertical-align: middle;
-	background: #f8f8f8;
-	border: 3px solid #ddd;
-	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
-	font-weight: 300;
-	line-height: 50px;
-	color: #888;
-	-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
-	-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
-	-o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+div.form-box {
+	padding-top: 5px;
+	padding-bottom: 15px;
 }
 
-.form-textarea {
+div.form-top {
+	overflow: hidden;
+	padding: 0 25px;
+	background: #fff;
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	text-align: left;
+}
+
+div.form-top-left {
+	float: left;
+	width: 75%;
+}
+
+div.form-top-right {
+	float: left;
+	width: 25%;
+	font-size: 66px;
+	color: #ddd;
+	line-height: 100px;
+	text-align: right;
+}
+
+div.form-bottom {
+	padding: 15px 25px;
+	background: #eee;
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
+	text-align: left;
+}
+
+div.form-bottom>form>textarea {
+	height: 100px;
+}
+
+div.form-bottom>form>button {
+	width: 100%;
+}
+
+input.form-input {
+	height: 36px;
+	padding: 0 18px;
+	vertical-align: middle;
+	background: #f8f8f8;
+	border: 1px solid #ddd;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	color: #888;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	-o-transition: all .3s;
+	-moz-transition: all .3s;
+	-webkit-transition: all .3s;
+	-ms-transition: all .3s;
+	transition: all .3s;
+}
+
+input.form-textarea {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	line-height: 30px;
 }
 
-.form-input:focus, 
-.form-textarea:focus { 
+input.form-input:focus, 
+input.form-textarea:focus { 
 	outline: 0;
 	background: #fff;
-	border: 3px solid #ccc;
-	-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
+	border: 1px solid #ccc;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
-.form-input:-moz-placeholder, 
-.form-textarea:-moz-placeholder {
+input.form-input:-moz-placeholder, 
+input.form-textarea:-moz-placeholder,
+input.form-input:-ms-input-placeholder, 
+input.form-textarea:-ms-input-placeholder,
+input.form-input::-webkit-input-placeholder, 
+input.form-textarea::-webkit-input-placeholder {
 	color: #888;
 }
 
-.form-input:-ms-input-placeholder, 
-.form-textarea:-ms-input-placeholder {
-	color: #888;
-}
-
-.form-input::-webkit-input-placeholder, 
-.form-textarea::-webkit-input-placeholder {
-	color: #888;
-}
-
-.btn-pynxl {
-	height: 45px;
-	margin: 0;
+button.btn-pynxl {
+	height: 36px;
 	padding: 0 20px;
 	vertical-align: middle;
-	background: #de995e;
+	background: #ff7420;
 	border: 0;
 	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 300;
-	line-height: 50px;
 	color: #fff;
-	-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 	text-shadow: none;
-	-moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
-	-o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	-o-transition: all .3s;
+	-moz-transition: all .3s;
+	-webkit-transition: all .3s;
+	-ms-transition: all .3s;
+	transition: all .3s;
 }
 
-.btn-pynxl:hover { opacity: 0.6; color: #fff; }
+button.btn-pynxl:active,
+button.btn-pynxl:focus,
+button.btn-pynxl:hover {
+	outline: 0;
+	opacity: 0.6;
+	background: #de995e;
+	color: #fff;
+}
 
-.btn-pynxl:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+a.forget-password {
+	color: #666;
+	text-decoration: none;
+	padding: 3px 5px;
+}
 
-.btn-pynxl:focus { outline: 0; opacity: 0.6; background: #de995e; color: #fff; }
+div.form-bottom-right>h5 {
+	color: #909090;
+	margin: 6px 0;
+}
 
-.btn-pynxl:active:focus, btn-pynxl.active:focus { outline: 0; opacity: 0.6; background: #de995e; color: #fff; }
+div.other-login>a {
+	margin: 3px 0;
+	width: 85%;
+}
 
+p.agreement {
+	bottom: 0;
+	color: #777;
+	font-size: 12px;
+	margin: 10px 0;
+}
