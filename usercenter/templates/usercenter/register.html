@@ -10,55 +10,68 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-            <div class="register-form form-box" style="display: none">
+        <div class="col-sm-5 col-sm-offset-3">
+            <div class="register-form form-box">
                 <div class="form-top">
                     <div class="form-top-left">
                         <h3>注册</h3>
                     </div>
                 </div>
                 <div class="form-bottom">
-                    <form role="form" id="register-form">
-                        {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-7 form-bottom-left">
+                            <form role="form" id="register-form">
+                                {% csrf_token %}
 
-                        <div class="form-group">
-                            <label class="sr-only" for="form-username">用户名</label>
-                            <input type="text" name="username" placeholder="用户名..." class="form-input form-control" id="username">
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-username">用户名</label>
+                                    <input type="text" name="username" placeholder="用户名" class="form-input form-control" id="username">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-email">注册邮箱</label>
+                                    <input type="text" name="email" placeholder="注册邮箱" class="form-input form-control" id="email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-password-1">密码</label>
+                                    <input type="password" name="password1" placeholder="密码" class="form-input form-control" id="password1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-password-2">确认密码</label>
+                                    <input type="password" name="password2" placeholder="确认密码" class="form-input form-control" id="password2">
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="sr-only" for="form-captcha">验证码</label>
+                                        <input type="text" id="captcha_key" name="captcha_key" class="form-input form-control" placeholder="验证码">
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <span>
+                                            <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
+                                                <img src="#" alt="验证码" class="captcha-img" style="width: 85px; height: 35px">
+                                            </a>
+                                        </span>
+                                        <input id="captcha_hashkey" name="captcha_hashkey" type="hidden" value="#">
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="register-button" class="btn btn-pynxl">同意并注册账号</button>
+                            </form>
                         </div>
-
-                        <div class="form-group">
-                            <label class="sr-only" for="form-email">注册邮箱</label>
-                            <input type="text" name="email" placeholder="注册邮箱..." class="form-input form-control" id="email">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="sr-only" for="form-password-1">密码</label>
-                            <input type="password" name="password1" placeholder="密码..." class="form-input form-control" id="password1">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="sr-only" for="form-password-2">确认密码</label>
-                            <input type="password" name="password2" placeholder="确认密码..." class="form-input form-control" id="password2">
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <label class="sr-only" for="form-captcha">验证码</label>
-                                <input type="text" id="captcha_key" name="captcha_key" class="form-input form-control" placeholder="验证码...">
+                        <div class="col-md-5 form-bottom-right">
+                            <h5>合作账号登录</h5>
+                            <div class="other-login">
+                                <a href="#" class="btn btn-warning" role="button"><i class="fa fa-weibo" aria-hidden="true"></i> 微博账号登录</a>
+                                <a href="#" class="btn btn-info" role="button"><i class="fa fa-weixin" aria-hidden="true"></i> 微信账号登录</a>
+                                <a href="#" class="btn btn-danger" role="button"><i class="fa fa-qq" aria-hidden="true"></i> QQ账号登录</a>
                             </div>
-
-                            <div class="col-sm-2">
-                                <span>
-                                    <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
-                                        <img src="#" alt="验证码" class="captcha-img" style="margin-top: 5px; width: 85px; height: 30px">
-                                    </a>
-                                </span>
-                                <input id="captcha_hashkey" name="captcha_hashkey" type="hidden" value="#">
-                            </div>
+                            <p class="agreement">使用即同意《<a href="/about/declaration" target="_blank">用户服务协议</a>》</p>
                         </div>
-
-                        <button type="submit" id="register-button" class="btn btn-pynxl">注册</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,9 +79,6 @@
 </div>
 
 <script>
-    $('div.register-form').slideDown(1000, function() {
-    });
-
     $('#register-button').click(function(){
         $(".form-box .alert").remove();
 

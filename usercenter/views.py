@@ -3,16 +3,21 @@
 import os
 import json
 
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views.generic import View
+
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
+
 from django.contrib import auth
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
+
 from django.utils.http import (base36_to_int, is_safe_url, urlsafe_base64_decode, urlsafe_base64_encode)
 
 from homepage.models import Website, Column
@@ -26,7 +31,6 @@ class UserCenter(View):
 
     def post(self, request, *args, **kwargs):
         slug = self.kwargs.get('slug')
-
         if slug == 'login':
             return self.login(request)
         elif slug == "register":
@@ -40,8 +44,7 @@ class UserCenter(View):
         elif slug == "resetpassword":
             return self.resetPassword(request)
         elif slug == "changeavatar":
-            return self.changeavatar(request)
-
+            return self.changeAvatar(request)
         raise PermissionDenied
 
     def verify_captcha(self, key, hashkey):
@@ -77,9 +80,8 @@ class UserCenter(View):
         key = request.POST.get("captcha_key")
         hashkey = request.POST.get("captcha_hashkey")
 
-        form = UserCreationForm(request.POST)
-
         context = {"status": 0}
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             if self.verify_captcha(key, hashkey):
                 new_user = form.save()
@@ -104,9 +106,8 @@ class UserCenter(View):
         key = request.POST.get("captcha_key")
         hashkey = request.POST.get("captcha_hashkey")
 
-        form = PasswordForgetForm(request.POST)
-
         context = {"status": 0}
+        form = PasswordForgetForm(request.POST)
         if form.is_valid():
             if not self.verify_captcha(key, hashkey):
                 context["status"] = -1
@@ -128,9 +129,8 @@ class UserCenter(View):
         if not request.user.is_authenticated():
             raise PermissionDenied
 
-        form = PasswordChangeForm(request.user, request.POST)
-
         context = {"status": 0}
+        form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             auth.logout(request)
@@ -154,11 +154,9 @@ class UserCenter(View):
             user = None
 
         token_generator = default_token_generator
-
         if user is not None and token_generator.check_token(user, token):
-            form = SetPasswordForm(user, request.POST)
-
             context = {"status": 0}
+            form = SetPasswordForm(user, request.POST)
             if form.is_valid():
                 user = form.save()
             else:
@@ -166,12 +164,24 @@ class UserCenter(View):
                 context["errors"] = []
                 for k, v in form.errors.items():
                     context["errors"].append(v.as_text())
-
             return HttpResponse(json.dumps(context), content_type="application/json")
         else:
             context = {"status": -1}
             context["errors"].append(u'密码重置链接已失效')
             return HttpResponse(json.dumps(context), status=403)
+
+    def changeAvatar(self, request):
+        avatar_blob = request.FILES['upload-avatar']
+        avatar_path = 'static/avatar/%d.jpg' % request.user.id
+        with open(avatar_path, 'wb+') as destination:
+            for chunk in avatar_blob.chunks():
+                destination.write(chunk)
+
+        user = User.objects.get(username = request.user.username)
+        user.img = '/' + avatar_path
+        user.save()
+        messages.add_message(request, messages.INFO, u'保存头像成功！')
+        return redirect('/usercenter/changeavatar')
 
 def refreshCaptcha(request):
     resp = dict()
@@ -183,7 +193,6 @@ def refreshCaptcha(request):
 def login(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
     context = {'site_info': site_info, 
             'column_list': column_list,}
     return render(request, 'usercenter/login.html', context)
@@ -191,7 +200,6 @@ def login(request):
 def register(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
     context = {'site_info': site_info, 
             'column_list': column_list,}
     return render(request, 'usercenter/register.html', context)
@@ -200,7 +208,6 @@ def register(request):
 def changeAvatar(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
     context = {'site_info': site_info, 
             'column_list': column_list,}
     return render(request, 'usercenter/changeavatar.html', context)
@@ -209,7 +216,6 @@ def changeAvatar(request):
 def changePassword(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
     context = {'site_info': site_info, 
             'column_list': column_list,}
     return render(request, 'usercenter/changepassword.html', context)
@@ -217,7 +223,6 @@ def changePassword(request):
 def forgetPassword(request):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-    
     context = {'site_info': site_info, 
             'column_list': column_list,}
     return render(request, 'usercenter/forgetpassword.html', context)
@@ -225,7 +230,6 @@ def forgetPassword(request):
 def resetPassword(request, uidb64, token):
     site_info = Website.objects.first()
     column_list = Column.objects.order_by('column_order')
-
     context = {'site_info': site_info, 
             'column_list': column_list,
             'uidb64': uidb64,

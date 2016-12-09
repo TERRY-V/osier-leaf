@@ -15,11 +15,11 @@
                 <img src="{{user.img}}" alt="" width="40">
                 &nbsp;{{ user.username }} 
             </a>
-            <a href="/usercenter/changeuseravatar"class="list-group-item active">
+            <a href="/usercenter/changeavatar" class="list-group-item active">
                 <strong>设置头像</strong>
                 <span class="glyphicon glyphicon-chevron-right pull-right"></span>
             </a>
-            <a href="/usercenter/changepassword"class="list-group-item">
+            <a href="/usercenter/changepassword" class="list-group-item">
                 修改密码
                 <span class="glyphicon glyphicon-chevron-right pull-right"></span>
             </a>
@@ -32,30 +32,37 @@
                         <strong>设置头像</strong>
                     </h3>
                 </div>
+
+                {% if messages %}
+                    <div class="alert alert-success" role="alert">
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
                
                 <div class="panel-body">
-                    <!--
-                    <div class="change-vatar-left">
-                        <div class="screen-avatar">
-                            <img id="tmp-avatar"  src="" alt="">
-                        </div>
-                        <form role="form" id="upload-avatar-form">
-                            <div class="form-group">
-                                <input type="button" id="save-avatar" class="btn btn-vmaig-auth" value="保存头像">
-                                <button type="button" class="btn btn-info" disabled="true">选择图片</button>
-                                <input type="file" id="upload-avatar" name="upload-avatar">
-                            </div>
-                        </form>
-                    </div>
-                    -->
-                    <div class="change-avatar-right">
+                    <div class="change-avatar">
                         <h4>头像预览</h4>
-                        <div id="preview-pane">
-                            <div class="preview-container" style="width:100px;height:100px;overflow:hidden;">
-                                <img  src="{{user.img}}" alt="">
-                            </div>
+
+                        <div id="avatar-preview" class="avatar-preview">
+                            <img src="{{ user.img }}" alt="avatar" class="img-responsive">
                         </div>
-                        大头像 100x100
+
+                        <div id="avatar-form" class="avatar-form">
+                            <form action="/usercenter/changeavatarcheck" method="post" role="form" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label class="control-label">请选择头像：</label>
+                                    <input type="file" id="upload-avatar" accept="image/*" name="upload-avatar" onchange="previewImage()">
+                                </div>
+
+                                <button type="submit" class="btn btn-info">保存</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,18 +71,16 @@
 </div>
 
 <script>
-    var jcrop_api, boundx, boundy;
-    var image = new Image();
-    var x, y, width, height = 0;
-    $('#tmp-tx').Jcrop({
-        onChange: updatePreview,
-        onSelect: updatePreview,
-        aspectRatio:1,
-        boxWidth:400,
-        boxHeight:300},
-        function(){
-            jcrop_api = this;
-        });
+    function previewImage() {
+        var file = document.getElementById("upload-avatar").files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            var preview = document.getElementById("avatar-preview");
+            preview.innerHTML = '<img src="' + this.result +'" alt="avatar" class="img-responsive">';
+        }
+        return false;
+    }
 </script>
 
 {% endblock %}

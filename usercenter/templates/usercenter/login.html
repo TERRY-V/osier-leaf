@@ -10,45 +10,59 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4 form-box">
-            <div class="login-form" style="display: none">
+        <div class="col-sm-5 col-sm-offset-3 form-box">
+            <div class="login-form">
                 <div class="form-top">
                     <div class="form-top-left">
                         <h3>登陆</h3>
                     </div>
                 </div>
                 <div class="form-bottom">
-                    <form id="login-form">
-                        {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-7 form-bottom-left">
+                            <form id="login-form">
+                                {% csrf_token %}
 
-                        <div class="form-group">
-                            <label class="sr-only" for="form-username">用户名</label>
-                            <input type="text" name="username" placeholder="用户名..." class="form-input form-control" id="username">
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-username">用户名</label>
+                                    <input type="text" name="username" placeholder="账号/邮箱" class="form-input form-control" id="username">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-password">密码</label>
+                                    <input type="password" name="password" placeholder="密码" class="form-input form-control" id="password">
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="sr-only" for="form-captcha">验证码</label>
+                                        <input type="text" id="captcha_key" name="captcha_key" class="form-input form-control" placeholder="验证码">
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <span>
+                                            <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
+                                                <img src="#" alt="验证码" class="captcha-img" style="width: 85px; height: 35px">
+                                            </a>
+                                        </span>
+                                        <input id="captcha_hashkey" name="captcha_hashkey" type="hidden" value="#">
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="login-button" class="btn btn-pynxl">登陆</button>
+                                <a href="/usercenter/forgetpassword" class="forget-password">忘记密码</a>
+                            </form>
                         </div>
-
-                        <div class="form-group">
-                            <label class="sr-only" for="form-password">密码</label>
-                            <input type="password" name="password" placeholder="密码..." class="form-input form-control" id="password">
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <label class="sr-only" for="form-captcha">验证码</label>
-                                <input type="text" id="captcha_key" name="captcha_key" class="form-input form-control" placeholder="验证码...">
+                        <div class="col-md-5 form-bottom-right">
+                            <h5>合作账号登录</h5>
+                            <div class="other-login">
+                                <a href="#" class="btn btn-warning" role="button"><i class="fa fa-weibo" aria-hidden="true"></i> 微博账号登录</a>
+                                <a href="#" class="btn btn-info" role="button"><i class="fa fa-weixin" aria-hidden="true"></i> 微信账号登录</a>
+                                <a href="#" class="btn btn-danger" role="button"><i class="fa fa-qq" aria-hidden="true"></i> QQ账号登录</a>
                             </div>
-
-                            <div class="col-sm-2">
-                                <span>
-                                    <a href="javascript:void(0);" onclick="refreshCaptcha()" class="next-captcha">
-                                        <img src="#" alt="验证码" class="captcha-img" style="margin-top: 5px; width: 85px; height: 30px">
-                                    </a>
-                                </span>
-                                <input id="captcha_hashkey" name="captcha_hashkey" type="hidden" value="#">
-                            </div>
+                            <p class="agreement">使用即同意《<a href="/about/declaration" target="_blank">用户服务协议</a>》</p>
                         </div>
-
-                        <button type="submit" id="login-button" class="btn btn-pynxl">登陆</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,9 +70,6 @@
 </div>
 
 <script>
-    $('div.login-form').slideDown(1000, function() {
-    });
-
     $('#login-button').click(function(){
         $(".form-box .alert").remove();
 
